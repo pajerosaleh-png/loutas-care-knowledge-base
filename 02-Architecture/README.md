@@ -1,4 +1,4 @@
-# Folder Name
+# Architecture
 
 Status: Ready
 
