@@ -1,8 +1,12 @@
 # LOUTAS Care Book Registry
 
-Status: Draft
+**Document ID:** REG-BOOK-001
 
-Version: 1.0
+**Status:** Draft
+
+**Version:** 1.0
+
+**Last Updated:** 2026-07-22
 
 ---
 
