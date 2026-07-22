@@ -410,3 +410,71 @@ Critical
 AI-generated recommendations shall always be presented as decision-support information.
 
 Clinical decisions remain the responsibility of the licensed healthcare professional.
+# FR-DASH-002
+
+### Title
+
+Display Role-Based Notifications
+
+### Business Value
+
+Ensure that every user is immediately informed about events, alerts, and tasks requiring attention, improving responsiveness and operational efficiency.
+
+### Primary Actors
+
+All authenticated users.
+
+### Preconditions
+
+* User is authenticated.
+* Notification service is available.
+* User has permission to receive notifications.
+
+### Trigger
+
+Dashboard is opened or new notification is generated.
+
+### Description
+
+The system shall display notifications relevant to the authenticated user's role, permissions, branch, and assigned responsibilities.
+
+Notifications shall be categorized by priority and displayed in descending order of importance.
+
+### Notification Categories
+
+* Critical
+* High Priority
+* Normal
+* Informational
+
+### Expected Result
+
+* Users receive only relevant notifications.
+* Notifications are ordered by priority.
+* Selecting a notification opens the related Workspace or screen.
+* Read and unread notifications are visually distinguishable.
+
+### Related Business Rules
+
+* BR-001 Role-Based Personalization
+* BR-004 Priority Notifications
+* BR-006 Workspace Navigation
+* BR-011 Security
+
+### Related Modules
+
+* Dashboard
+* Workspace
+* Security
+* Notification Service
+
+### Priority
+
+High
+
+### Acceptance Criteria
+
+* Unauthorized notifications are never displayed.
+* Critical notifications always appear first.
+* Clicking a notification opens the correct destination.
+* Notification status updates correctly after being viewed.
