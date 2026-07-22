@@ -1,15 +1,15 @@
-| Property              | Value                                       |
-| --------------------- | ------------------------------------------- |
-| **Document ID**       | APT-006                                     |
-| **Domain**            | Appointment                                 |
-| **Status**            | Draft                                       |
-| **Version**           | 1.0                                         |
-| **Owner**             | Business Architecture                       |
-| **Last Updated**      | 2026-07-22                                  |
-| **Depends On**        | APT-001, APT-002, APT-003, APT-004, APT-005 |
-| **Related Documents** | APT-007, APT-008, APT-009                   |
-
-
+| Property | Value |
+|----------|-------|
+| Document ID | APT-006 |
+| Domain | Appointment |
+| Document Type | Business Architecture |
+| Classification | Functional Requirements |
+| Status | Draft |
+| Version | 1.0 |
+| Owner | Business Architecture |
+| Last Updated | 2026-07-22 |
+| Depends On | APT-001, APT-002, APT-003, APT-004, APT-005 |
+| Related Documents | APT-007, APT-008, APT-009 |
 Purpose
 
 This document defines the functional capabilities and functional requirements of the Appointment Business Domain.
