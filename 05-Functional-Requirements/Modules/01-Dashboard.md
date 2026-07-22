@@ -233,3 +233,104 @@ Every widget shall:
 * Support responsive layouts across devices.
 
 
+
+# Business Rules
+
+The Dashboard shall operate according to the following business rules to ensure consistency, accuracy, and role-based relevance.
+
+---
+
+## BR-001 Role-Based Personalization
+
+Each authenticated user shall receive a Dashboard customized according to their assigned role and permissions.
+
+Users shall never view widgets unrelated to their responsibilities.
+
+---
+
+## BR-002 Branch Isolation
+
+Users shall only view operational information belonging to their authorized branch unless granted cross-branch permissions.
+
+---
+
+## BR-003 Real-Time Updates
+
+Operational widgets displaying queues, appointments, waiting patients, or active visits shall refresh automatically without requiring a full page reload whenever technically feasible.
+
+---
+
+## BR-004 Priority Notifications
+
+Critical notifications shall always appear above informational notifications.
+
+Priority order:
+
+1. Critical
+2. High
+3. Normal
+4. Informational
+
+---
+
+## BR-005 Quick Actions
+
+Quick Actions shall display only functions that the authenticated user is authorized to perform.
+
+Unavailable actions shall not be displayed.
+
+---
+
+## BR-006 Workspace Navigation
+
+Selecting a widget shall navigate the user directly to the related Workspace or operational screen whenever applicable.
+
+The system should minimize unnecessary navigation steps.
+
+---
+
+## BR-007 KPI Visibility
+
+Performance indicators shall be displayed only when meaningful for the user's responsibilities.
+
+For example:
+
+* Physicians shall not see financial KPIs.
+* Cashiers shall not see clinical KPIs.
+* Executives may view organization-wide KPIs.
+
+---
+
+## BR-008 Recent Activity
+
+Recent Activity shall display only records previously accessed by the authenticated user, subject to security policies.
+
+---
+
+## BR-009 Empty States
+
+When no information is available, the Dashboard shall display informative empty-state messages rather than blank sections.
+
+---
+
+## BR-010 Performance
+
+The Dashboard should load the essential operational information within acceptable performance targets before loading secondary widgets.
+
+Critical information shall always receive loading priority.
+
+---
+
+## BR-011 Security
+
+All Dashboard data shall respect authentication, authorization, and auditing requirements.
+
+Sensitive patient information shall never be displayed to unauthorized users.
+
+---
+
+## BR-012 AI Recommendations
+
+AI-generated recommendations shall always be presented as decision-support information.
+
+Clinical decisions remain the responsibility of the licensed healthcare professional.
