@@ -114,5 +114,69 @@ Major architectural changes require a major version increment.
 Minor wording or formatting updates require a minor version increment.
 
 ---
+# 7. Document Structure
+
+Every official document shall follow a consistent structure.
+
+The recommended order is:
+
+1. Document Information
+2. Purpose
+3. Scope
+4. Definitions (if applicable)
+5. Main Content
+6. References
+7. Revision History
+
+Documents may include additional sections when necessary, but the overall structure should remain consistent.
+
+---
+
+# 8. File Naming Convention
+
+File names shall follow these rules:
+
+- Use English only.
+- Use hyphens (-) instead of spaces.
+- Avoid special characters.
+- File names should clearly describe their content.
+- Prefixes shall follow the official document identification standard.
+
+Examples:
+
+- LC-STD-001-Documentation-Standards.md
+- LC-BOOK-000-Product-Constitution.md
+- ADR-001-Invoice-Governance.md
+
+---
+
+# 9. Markdown Standards
+
+All documentation shall be written using Markdown.
+
+The following practices are mandatory:
+
+- Use Heading hierarchy correctly.
+- Use tables for structured information.
+- Use bullet lists where appropriate.
+- Use code blocks for examples.
+- Avoid unnecessary formatting.
+- Keep documents readable and concise.
+
+---
+
+# 10. References
+
+Whenever a document depends on another document, it shall reference it explicitly.
+
+Example:
+
+Related Documents
+
+- LC-BOOK-000 Product Constitution
+- ADR-001 Invoice Governance
+- LC-STD-001 Documentation Standards
+
+---
 
 ---
