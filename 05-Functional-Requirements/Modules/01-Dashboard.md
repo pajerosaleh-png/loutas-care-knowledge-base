@@ -326,6 +326,82 @@ Critical information shall always receive loading priority.
 All Dashboard data shall respect authentication, authorization, and auditing requirements.
 
 Sensitive patient information shall never be displayed to unauthorized users.
+# Functional Requirements
+
+---
+
+## FR-DASH-001
+
+### Title
+
+Display Personalized Dashboard After Successful Login
+
+### Business Value
+
+Provide every authenticated user with immediate access to the information, tools, and actions required to start their work efficiently.
+
+### Primary Actors
+
+* Physician
+* Receptionist
+* Nurse
+* Cashier
+* Laboratory Staff
+* Radiology Staff
+* Pharmacist
+* Branch Manager
+* Clinic Owner
+* System Administrator
+
+### Preconditions
+
+* User authentication is successful.
+* User account is active.
+* User has at least one assigned role.
+
+### Trigger
+
+The user successfully signs in to the platform.
+
+### Description
+
+The system shall automatically display a personalized Dashboard based on the authenticated user's role, permissions, assigned branch, and organizational context.
+
+The Dashboard shall display only the widgets, KPIs, notifications, and quick actions relevant to that user.
+
+### Expected Result
+
+* Dashboard loads successfully.
+* Correct widgets are displayed.
+* Unauthorized information is hidden.
+* Quick Actions match user permissions.
+* User can immediately continue to the appropriate Workspace.
+
+### Related Business Rules
+
+* BR-001 Role-Based Personalization
+* BR-002 Branch Isolation
+* BR-005 Quick Actions
+* BR-006 Workspace Navigation
+
+### Related Modules
+
+* Authentication
+* Dashboard
+* Workspace
+* Security
+
+### Priority
+
+Critical
+
+### Acceptance Criteria
+
+* Dashboard opens automatically after login.
+* Loading time meets platform performance targets.
+* User sees only authorized information.
+* Navigation to Workspace is available without additional setup.
+
 
 ---
 
