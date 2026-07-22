@@ -24,5 +24,6 @@ Appointments provide operational planning for future healthcare encounters but d
 
 Clinical care begins only after the patient arrives and the Patient Journey is initiated according to approved business workflows.
 
-The Appointment Business Domain aims to improve healthcare accessibility, reduce scheduling conflicts, optimize provider utilization, minimize patient waiting time, and provide an excellent patient experience through intelligent appointment management.
+The Appointment Business Domain aims to improve healthcare accessibility, reduce scheduling conflicts, optimize provider utilization, minimize patient waiting time, The Appointment Business Domain shall be architected to support advanced scheduling capabilities including recurring appointments, treatment courses, resource scheduling, appointment templates, provider schedules, leave management, waiting lists, overbooking policies, intelligent scheduling, and future operational scheduling models without requiring architectural redesign.
+
 
