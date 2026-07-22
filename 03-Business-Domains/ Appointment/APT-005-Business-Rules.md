@@ -12,11 +12,6 @@
 | Related Documents | APT-006, APT-009 |
 APT-005 — Appointment Business Rules
 
-Document ID: APT-005
-Module: Appointment
-Status: Draft
-Version: 1.0
-
 1. Purpose
 
 This document defines the business rules governing appointment scheduling within the LOUTAS Care platform.
