@@ -1,4 +1,4 @@
-# Book Registry
+# LOUTAS Care Book Registry
 
 Status: Draft
 
