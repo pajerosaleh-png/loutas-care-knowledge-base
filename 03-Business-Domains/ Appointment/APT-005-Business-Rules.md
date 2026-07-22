@@ -1,3 +1,15 @@
+# APT-005 — Appointment Business Rules
+
+| Property | Value |
+|----------|-------|
+| Document ID | APT-005 |
+| Domain | Appointment |
+| Status | Draft |
+| Version | 1.0 |
+| Owner | Business Architecture |
+| Last Updated | 2026-07-22 |
+| Depends On | APT-001, APT-002, APT-003, APT-004 |
+| Related Documents | APT-006, APT-009 |
 APT-005 — Appointment Business Rules
 
 Document ID: APT-005
@@ -307,3 +319,18 @@ Scalable enterprise architecture.
 High maintainability.
 Reusable scheduling capabilities across all healthcare specialties.
 Future extensibility for advanced scheduling and resource management.
+---
+
+# Change History
+
+| Version | Date | Description |
+|----------|------|-------------|
+| 1.0 | 2026-07-22 | Initial Draft |
+
+---
+
+# Approval
+
+| Role | Name | Status |
+|------|------|--------|
+| Solution Architect | Ahmed Saleh | Pending |
