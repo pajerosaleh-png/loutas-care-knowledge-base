@@ -84,7 +84,20 @@ The Dashboard is designed to help users start work immediately after login.
 * Dashboard Architecture (Future)
 
 ---
+# Dependencies
 
+This module depends on the following platform capabilities:
+
+- Authentication
+- Authorization (RBAC)
+- User Preferences
+- Notification Framework
+- Global Search
+- AI Platform
+- Reporting Services
+- Workspace Framework
+
+The Dashboard coordinates information from multiple platform services and modules but does not own their business logic.
 # Notes
 
 Detailed dashboard widgets, business rules, KPIs, and workflows are defined in the following sections of this module.
