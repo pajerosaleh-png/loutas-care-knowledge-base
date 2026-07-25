@@ -71,6 +71,24 @@ Every module shall include:
 
 ---
 
+# Dependencies
+
+The Functional Requirements documentation is aligned with and depends on:
+
+- Product Constitution
+- Product Specification
+- Architecture
+- Business Domains
+- Clinical
+- Billing
+- Database
+- Security
+- Platform
+- Development Standards
+
+This documentation defines **what** the platform must do, while architecture and development documentation define **how** it is implemented.
+---
+
 # Notes
 
 This directory contains the official functional specification for every module of the LOUTAS Care platform.
