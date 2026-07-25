@@ -9,4 +9,22 @@ The Reception Module serves as the operational coordination center for patient r
 It ensures that every patient enters the healthcare process through a standardized, secure, and efficient workflow.
 
 The Reception Module is the starting point of the Patient Journey within the LOUTAS Care platform.
+---
+
+# Scope
+
+The Reception Module includes the functional requirements for:
+
+- Patient Registration
+- Patient Identification
+- Appointment Booking
+- Appointment Rescheduling
+- Appointment Cancellation
+- Patient Check-in
+- Patient Queue Management
+- Walk-in Patient Handling
+- Patient Search
+- Visit Initiation
+- Reception Workspace
+- Patient Journey Handover
 
