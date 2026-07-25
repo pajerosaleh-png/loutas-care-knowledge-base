@@ -947,3 +947,38 @@ This document defines the functional behaviour of the Appointments Module.
 Implementation details are defined in the Architecture and Development documentation.
 
 Any future enhancement to appointment workflows shall remain consistent with the approved Patient Journey and Clinical Architecture.
+# Non-Functional Requirements
+
+## Performance
+
+- Calendar shall load within acceptable response times.
+- Appointment search shall return results efficiently.
+
+## Availability
+
+- Appointment services shall follow platform availability requirements.
+
+## Scalability
+
+- Support multi-branch organizations.
+- Support concurrent scheduling.
+
+## Auditability
+
+- All appointment lifecycle events shall be auditable.
+
+## Reliability
+
+- Appointment transactions shall preserve data consistency.
+
+## Usability
+
+- Calendar shall support responsive layouts.
+  Out of Scope
+
+- Online Patient Booking
+- Telemedicine Scheduling
+- External Calendar Synchronization
+- AI Appointment Optimization
+
+These features are planned for future releases.
