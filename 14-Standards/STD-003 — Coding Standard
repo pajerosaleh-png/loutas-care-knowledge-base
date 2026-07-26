@@ -1,0 +1,295 @@
+# STD-003 — Coding Standards
+
+**Document Classification:** Enterprise Standard  
+**Priority:** Critical  
+**Status:** Approved  
+**Version:** 1.0
+
+---
+
+# 1. Purpose
+
+This document defines the official coding standards for the LOUTAS Care platform.
+
+Its objective is to ensure that all source code is consistent, maintainable, secure, scalable, testable, and aligned with enterprise software engineering best practices.
+
+These standards apply to all software developed for the LOUTAS Care platform.
+
+---
+
+# 2. Scope
+
+This standard applies to:
+
+- Backend Services
+- Frontend Applications
+- APIs
+- Database Access Layer
+- AI Services
+- Shared Libraries
+- Infrastructure Code
+- Automated Tests
+- CI/CD Scripts
+
+---
+
+# 3. General Principles
+
+All code shall be:
+
+- Readable
+- Maintainable
+- Modular
+- Reusable
+- Secure
+- Testable
+- Documented where appropriate
+- Free from unnecessary complexity
+
+Code shall prioritize clarity over cleverness.
+
+---
+
+# 4. SOLID Principles
+
+All application services shall follow SOLID principles:
+
+- Single Responsibility Principle (SRP)
+- Open/Closed Principle (OCP)
+- Liskov Substitution Principle (LSP)
+- Interface Segregation Principle (ISP)
+- Dependency Inversion Principle (DIP)
+
+---
+
+# 5. Clean Code
+
+Developers shall:
+
+- Use meaningful names.
+- Keep methods short.
+- Avoid duplicated logic.
+- Minimize nesting.
+- Prefer composition over inheritance.
+- Remove unused code.
+
+Magic numbers and hardcoded values shall be avoided.
+
+---
+
+# 6. Project Structure
+
+The application shall be organized by feature or domain.
+
+Example:
+
+```
+src/
+ ├── appointments/
+ ├── billing/
+ ├── emr/
+ ├── laboratory/
+ ├── pharmacy/
+ ├── inventory/
+ └── shared/
+```
+
+Cross-module dependencies shall be minimized.
+
+---
+
+# 7. Naming Standards
+
+Naming shall comply with:
+
+- STD-002 Naming Conventions
+
+Examples:
+
+- Classes → PascalCase
+- Methods → camelCase
+- Variables → camelCase
+- Constants → UPPER_SNAKE_CASE
+- Interfaces → IPatientService
+
+---
+
+# 8. Error Handling
+
+Applications shall:
+
+- Handle expected exceptions gracefully.
+- Avoid exposing internal implementation details.
+- Return standardized error responses.
+- Log unexpected exceptions.
+
+Exceptions shall not be silently ignored.
+
+---
+
+# 9. Logging
+
+Logging shall:
+
+- Record meaningful operational events.
+- Avoid duplicate entries.
+- Exclude sensitive information.
+- Include correlation identifiers where applicable.
+
+Supported log levels:
+
+- Trace
+- Debug
+- Information
+- Warning
+- Error
+- Critical
+
+---
+
+# 10. Security
+
+Developers shall:
+
+- Validate all external input.
+- Sanitize user-provided data.
+- Use parameterized database queries.
+- Prevent SQL Injection.
+- Prevent XSS.
+- Prevent CSRF where applicable.
+- Follow the principle of least privilege.
+
+Sensitive data shall never be hardcoded.
+
+---
+
+# 11. API Development
+
+API implementations shall comply with:
+
+- STD-004 API Design Standards
+
+Controllers shall:
+
+- Remain lightweight.
+- Delegate business logic to services.
+- Validate requests.
+- Return standardized responses.
+
+---
+
+# 12. Database Access
+
+Database access shall:
+
+- Use the approved ORM.
+- Execute operations through repositories or services.
+- Avoid duplicated queries.
+- Use transactions where required.
+
+Direct SQL shall be limited to justified scenarios.
+
+---
+
+# 13. Performance
+
+Developers shall:
+
+- Avoid unnecessary database queries.
+- Minimize network calls.
+- Optimize loops.
+- Cache frequently accessed data where appropriate.
+- Prevent N+1 query problems.
+
+Performance optimizations shall not compromise readability without justification.
+
+---
+
+# 14. Configuration
+
+Application configuration shall:
+
+- Be environment-specific.
+- Use environment variables.
+- Avoid hardcoded credentials.
+- Support secure secret management.
+
+---
+
+# 15. Testing
+
+All business logic shall be testable.
+
+Recommended test types:
+
+- Unit Tests
+- Integration Tests
+- End-to-End Tests
+
+Critical business workflows should have automated test coverage.
+
+---
+
+# 16. Documentation
+
+Public APIs, complex algorithms, and reusable libraries shall include appropriate documentation.
+
+Comments shall explain *why*, not *what*, unless additional clarification is required.
+
+---
+
+# 17. Code Review
+
+Every code change shall undergo peer review.
+
+Reviewers shall verify:
+
+- Correctness
+- Security
+- Performance
+- Maintainability
+- Compliance with project standards
+- Test coverage
+
+---
+
+# 18. Technical Debt
+
+Technical debt shall:
+
+- Be documented.
+- Be prioritized.
+- Be tracked through the project backlog.
+
+Temporary workarounds shall include a remediation plan.
+
+---
+
+# 19. Compliance
+
+All source code contributed to the project shall comply with this standard.
+
+Automated linting, formatting, static analysis, and CI validation are strongly recommended.
+
+---
+
+# 20. Exceptions
+
+Exceptions shall require documented technical justification and approval through the project's governance process.
+
+---
+
+# 21. Related Documents
+
+- STD-001 Documentation Standards
+- STD-002 Naming Conventions
+- STD-004 API Design Standards
+- STD-005 Database Standards
+- STD-006 Security Standards
+- Development Standards
+- Architecture
+- ADR Repository
+
+---
+
+**End of STD-003**
