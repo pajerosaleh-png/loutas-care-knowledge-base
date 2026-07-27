@@ -17,7 +17,7 @@ Highest governing documents.
 Enterprise AI governance documents.README.md ✅
 
 
-AI-002 Enterprise AI Governance (Planned)
+AI-002 Enterprise AI Governance ✅ Approved (v1.0.0)
 AI-003 AI Roles & Responsibilities (Planned)
 AI-004 AI Decision Framework (Planned)
 AI-005 AI Compliance Framework (Planned)
