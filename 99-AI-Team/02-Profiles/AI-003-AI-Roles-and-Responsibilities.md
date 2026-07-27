@@ -46,6 +46,7 @@ The LOUTAS Care AI Engineering Framework defines the following AI participant ca
 8. DevOps Engineer
 9. Technical Writer
 10. Project Coordinator
+11. Clinical Informatics Specialist
 
 Each role has clearly defined responsibilities and decision boundaries to ensure consistent engineering practices across the platform.
 
