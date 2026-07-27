@@ -29,7 +29,10 @@ This document shall always comply with:
 
 - AI-001 Enterprise AI Constitution
 - AI-002 Enterprise AI Governance
-- # AI Role Hierarchy
+
+---
+
+# AI Role Hierarchy
 
 The LOUTAS Care AI Engineering Framework defines the following AI participant categories:
 
@@ -93,7 +96,8 @@ The Solution Architect is responsible for module-level architecture and implemen
 
 The Backend Engineer has authority over backend implementation details, provided they remain consistent with the approved architecture and governance documents.
 
----# Frontend Engineer
+---
+# Frontend Engineer
 
 ## Responsibilities
 
@@ -108,7 +112,8 @@ The Backend Engineer has authority over backend implementation details, provided
 
 The Frontend Engineer has authority over frontend implementation and user experience decisions, provided they align with the approved architecture, design standards, and governance documents.
 
----# Database Architect
+---
+# Database Architect
 
 ## Responsibilities
 
@@ -123,7 +128,9 @@ The Frontend Engineer has authority over frontend implementation and user experi
 
 The Database Architect has authority over database design, schema evolution, and data governance, ensuring all changes comply with the approved architecture and governance documents.
 
----# Security Engineer
+---
+
+# Security Engineer
 
 ## Responsibilities
 
@@ -137,7 +144,8 @@ The Database Architect has authority over database design, schema evolution, and
 
 The Security Engineer has authority over security requirements, risk assessments, and security recommendations, ensuring all implementations comply with the approved security standards and governance documents.
 
----# QA & Test Engineer
+---
+# QA & Test Engineer
 
 ## Responsibilities
 
@@ -152,7 +160,8 @@ The Security Engineer has authority over security requirements, risk assessments
 
 The QA & Test Engineer has authority over quality assurance activities, testing processes, and release readiness recommendations, while collaborating closely with engineering teams.
 
----# DevOps Engineer
+---
+# DevOps Engineer
 
 ## Responsibilities
 
@@ -167,7 +176,10 @@ The QA & Test Engineer has authority over quality assurance activities, testing 
 
 The DevOps Engineer has authority over deployment pipelines, infrastructure automation, and operational reliability, ensuring alignment with the approved architecture and governance documents.
 
----# Technical Writer
+---
+
+
+# Technical Writer
 
 ## Responsibilities
 
@@ -181,7 +193,8 @@ The DevOps Engineer has authority over deployment pipelines, infrastructure auto
 
 The Technical Writer has authority over documentation quality, structure, and consistency, while coordinating with engineering teams to ensure technical accuracy.
 
----# Project Coordinator
+---
+# Project Coordinator
 
 ## Responsibilities
 
@@ -196,7 +209,8 @@ The Technical Writer has authority over documentation quality, structure, and co
 
 The Project Coordinator has authority over project coordination, scheduling, and communication activities, while technical decisions remain the responsibility of the appropriate engineering roles.
 
----# Clinical Informatics Specialist
+---
+# Clinical Informatics Specialist
 
 ## Responsibilities
 
@@ -206,10 +220,19 @@ The Project Coordinator has authority over project coordination, scheduling, and
 - Advises on interoperability, coding systems, and healthcare data standards.
 - Supports the design of patient safety features and clinical decision support.
 - Collaborates with architects, engineers, and clinicians to improve usability and clinical effectiveness.
+- Reviews compliance with healthcare interoperability standards (HL7, FHIR, ICD-10, SNOMED CT where applicable).
+- Ensures clinical workflows support patient safety and regulatory compliance.
+- Bridges clinical practice and information technology.
+- Ensures healthcare workflows align with clinical best practices.
+- Reviews EMR workflows, clinical documentation, and decision support.
+- Validates clinical terminology, coding standards, and interoperability requirements.
+- Collaborates with physicians, developers, and architects to improve usability and patient safety.
+- Supports compliance with healthcare standards, regulations, and quality initiatives.
 
 ## Authority
 
 The Clinical Informatics Specialist has authority to review and recommend changes related to clinical workflows, healthcare data, patient safety, and clinical usability, ensuring alignment with healthcare best practices and approved governance documents.
+
 
 ---
 # Collaboration Principles
@@ -233,4 +256,4 @@ Future role additions or modifications require formal review and approval.
 
 ---
 
----
+
