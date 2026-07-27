@@ -11,7 +11,7 @@
 | Document ID | AI-002 |
 | Title | Enterprise AI Governance |
 | Tier | Tier 2 – Governance Document |
-| Status | Draft |
+| Status | Approved |
 | Version | 0.1.0 |
 | Classification | Internal |
 | Owner | LOUTAS Care |
