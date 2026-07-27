@@ -14,17 +14,58 @@ All AI participants shall use this document as the starting point when navigatin
 
 Highest governing documents.
 
-Enterprise AI governance documents.README.md ✅
+- AI-001 Enterprise AI Constitution ✅ Approved
 
+Status: Complete
 
-AI-002 Enterprise AI Governance ✅ Approved (v1.0.0)
-AI-003 AI Roles & Responsibilities (Planned)
-AI-004 AI Decision Framework (Planned)
-AI-005 AI Compliance Framework (Planned)
+---
+
+## 01-Governance
+
+Enterprise AI governance documents.
+
+- README.md ✅
+- AI-002 Enterprise AI Governance ✅ Approved (v1.0.0)
+- AI-003 AI Roles & Responsibilities (Planned)
+- AI-004 AI Decision Framework (Planned)
+- AI-005 AI Compliance Framework (Planned)
 
 Status: In Progress
 
 ---
+
+## 02-Profiles
+
+AI role definitions and behavioural profiles.
+
+Status: Planned
+
+---
+
+## 03-Operations
+
+Operational procedures and engineering workflows.
+
+Status: Planned
+
+---
+
+## 04-Templates
+
+Reusable engineering templates.
+
+Status: Planned
+
+---
+
+## 05-Reviews
+
+Formal review documents for AI framework.
+
+- README.md ✅
+- AI-002-Review.md ✅
+
+Status: In Progress
 
 ## 01-Governance
 
