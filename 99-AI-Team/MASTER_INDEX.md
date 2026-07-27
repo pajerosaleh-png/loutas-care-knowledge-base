@@ -74,10 +74,11 @@ Status: In Progress
 
 Every AI participant should read documents in the following order:
 
+1. AI-001 Enterprise AI Constitution
 2. AI-002 Enterprise AI Governance
-3. AI Roles & Responsibilities
-4. Operational Procedures
-5. Templates
+3. AI-003 AI Roles & Responsibilities
+4. AI Operational Procedures
+5. AI Templates
 
 ---
 
