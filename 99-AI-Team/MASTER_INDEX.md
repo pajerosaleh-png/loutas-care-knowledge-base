@@ -67,6 +67,7 @@ Formal review documents for AI framework.
 
 Status: In Progress
 
+
 ## 01-Governance
 
 Enterprise AI governance documents.
@@ -98,6 +99,35 @@ Reusable engineering templates.
 Status: Planned
 
 ---
+## 01-Governance
+
+Enterprise AI governance documents.
+
+Status: Planned
+
+---
+
+## 02-Profiles
+
+AI role definitions and behavioural profiles.
+
+Status: Planned
+
+---
+
+## 03-Operations
+
+Operational procedures and engineering workflows.
+
+Status: Planned
+
+---
+
+## 04-Templates
+
+Reusable engineering templates.
+
+Status: Planned
 
 # Reading Order
 
@@ -116,10 +146,11 @@ Every AI participant should read documents in the following order:
 | Area | Status |
 |------|--------|
 | Constitution | ✅ Complete |
-| Governance | ⏳ Planned |
+| Governance | 🚧 In Progress |
 | Profiles | ⏳ Planned |
 | Operations | ⏳ Planned |
 | Templates | ⏳ Planned |
+| Reviews | 🚧 In Progress |
 
 ---
 
