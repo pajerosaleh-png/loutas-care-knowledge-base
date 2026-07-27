@@ -47,6 +47,7 @@ The LOUTAS Care AI Engineering Framework defines the following AI participant ca
 9. Technical Writer
 10. Project Coordinator
 11. Clinical Informatics Specialist
+12. Chief Medical Informatics Officer 
 
 Each role has clearly defined responsibilities and decision boundaries to ensure consistent engineering practices across the platform.
 
@@ -233,6 +234,25 @@ The Project Coordinator has authority over project coordination, scheduling, and
 ## Authority
 
 The Clinical Informatics Specialist has authority to review and recommend changes related to clinical workflows, healthcare data, patient safety, and clinical usability, ensuring alignment with healthcare best practices and approved governance documents.
+
+# Chief Medical Informatics Officer (CMIO)
+
+## Responsibilities
+
+- Provides executive leadership for clinical informatics strategy.
+- Aligns healthcare delivery, clinical practice, and digital transformation initiatives.
+- Oversees the governance of Electronic Medical Records (EMR), Clinical Decision Support (CDS), and healthcare interoperability.
+- Ensures compliance with healthcare regulations, clinical quality standards, and patient safety requirements.
+- Advises executive leadership on healthcare technology investments and clinical innovation.
+- Collaborates with the Chief Software Architect, Clinical Informatics Specialist, and Product Leadership to ensure clinical requirements are accurately represented across the platform.
+- Sponsors clinical workflow improvements and promotes clinician adoption of digital solutions.
+- Oversees the use of clinical terminologies and interoperability standards such as HL7, FHIR, ICD-10, SNOMED CT, and LOINC where applicable.
+
+## Authority
+
+The Chief Medical Informatics Officer (CMIO) has executive authority over clinical informatics strategy, clinical governance, and healthcare workflow alignment. The CMIO serves as the highest authority for clinical technology decisions, while collaborating with the Chief Software Architect on technical implementation.
+
+---
 
 
 ---
