@@ -14,9 +14,9 @@ All AI participants shall use this document as the starting point when navigatin
 
 Highest governing documents.
 
-Enterprise AI governance documents.
+Enterprise AI governance documents.README.md ✅
 
-README.md ✅
+
 AI-002 Enterprise AI Governance (Planned)
 AI-003 AI Roles & Responsibilities (Planned)
 AI-004 AI Decision Framework (Planned)
