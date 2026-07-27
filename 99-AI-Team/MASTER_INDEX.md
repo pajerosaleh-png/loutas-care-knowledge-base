@@ -67,37 +67,6 @@ Formal review documents for AI framework.
 
 Status: In Progress
 
-
-## 01-Governance
-
-Enterprise AI governance documents.
-
-Status: Planned
-
----
-
-## 02-Profiles
-
-AI role definitions and behavioural profiles.
-
-Status: Planned
-
----
-
-## 03-Operations
-
-Operational procedures and engineering workflows.
-
-Status: Planned
-
----
-
-## 04-Templates
-
-Reusable engineering templates.
-
-Status: Planned
-
 ---
 ## 01-Governance
 
