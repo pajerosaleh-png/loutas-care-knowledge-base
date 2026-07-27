@@ -14,9 +14,15 @@ All AI participants shall use this document as the starting point when navigatin
 
 Highest governing documents.
 
-- AI-001 Enterprise AI Constitution
+Enterprise AI governance documents.
 
-Status: Approved
+README.md ✅
+AI-002 Enterprise AI Governance (Planned)
+AI-003 AI Roles & Responsibilities (Planned)
+AI-004 AI Decision Framework (Planned)
+AI-005 AI Compliance Framework (Planned)
+
+Status: In Progress
 
 ---
 
