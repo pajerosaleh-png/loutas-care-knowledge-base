@@ -19,6 +19,8 @@
 | Related Documents | AI-002 Enterprise AI Governance, AI-003 AI Roles & Responsibilities, AI-004 AI Decision Framework |
 
 ---
+
+---
 # Purpose
 
 This document establishes the compliance framework governing all AI participants within the LOUTAS Care Platform.
@@ -41,6 +43,8 @@ This document shall always comply with:
 - AI-004 AI Decision Framework
 
 ---
+
+---
 # Compliance Principles
 
 All AI participants shall adhere to the following compliance principles:
@@ -57,33 +61,90 @@ All AI participants shall adhere to the following compliance principles:
 These principles apply to all engineering, architecture, clinical informatics, operational, and documentation activities.
 
 ---
-# Compliance Domains
 
-The AI Compliance Framework covers the following domains:
 
-| Domain | Description |
-|---------|-------------|
-| Governance | Compliance with AI governance documents and approved engineering processes. |
-| Clinical | Compliance with approved clinical workflows, patient safety principles, and healthcare best practices. |
-| Security | Compliance with organizational security policies, secure development practices, and risk management. |
-| Privacy | Protection of patient and organizational data in accordance with applicable privacy requirements. |
-| Architecture | Compliance with approved enterprise architecture and design standards. |
-| Documentation | Maintenance of complete, accurate, and traceable technical documentation. |
-| Audit | Availability of evidence to support internal and external compliance reviews. |
-
----
 # Compliance Responsibilities
 
 Compliance is a shared responsibility across all AI participants.
 
-Key responsibilities include:
+| Role | Primary Compliance Responsibility |
+|------|-----------------------------------|
+| Chief Software Architect | Enterprise architecture governance and technical compliance. |
+| Chief Medical Informatics Officer (CMIO) | Clinical governance, patient safety, and healthcare standards compliance. |
+| Solution Architect | Solution compliance with approved architecture and governance. |
+| Backend Engineer | Secure implementation, business rule compliance, and API integrity. |
+| Frontend Engineer | UI consistency, accessibility, and approved user experience standards. |
+| Database Architect | Data integrity, schema governance, and database compliance. |
+| Security Engineer | Security policies, risk management, and compliance monitoring. |
+| QA & Test Engineer | Verification of functional, security, and compliance requirements. |
+| DevOps Engineer | Infrastructure, deployment, monitoring, and operational compliance. |
+| Technical Writer | Documentation accuracy, traceability, and governance consistency. |
+| Project Coordinator | Coordination of compliance activities and governance reporting. |
+| Clinical Informatics Specialist | Clinical workflow validation, interoperability, and healthcare data standards compliance. |
 
-- Chief Software Architect — Ensures enterprise governance and architectural compliance.
-- Chief Medical Informatics Officer (CMIO) — Ensures compliance with clinical governance, patient safety, and healthcare standards.
-- Security Engineer — Ensures security and cybersecurity compliance.
-- Database Architect — Ensures data integrity and database governance.
-- Clinical Informatics Specialist — Validates clinical workflow compliance and interoperability.
-- Technical Writer — Maintains compliant and traceable documentation.
-- All AI Participants — Follow approved governance documents, engineering standards, and compliance requirements.
+---
+# Compliance Controls
+
+The following controls shall be implemented to support ongoing compliance:
+
+- Compliance with approved governance documents before implementation begins.
+- Mandatory architecture and design reviews for significant changes.
+- Security reviews for features affecting authentication, authorization, or sensitive data.
+- Clinical reviews for changes impacting patient care, EMR workflows, or clinical decision support.
+- Documentation reviews to ensure traceability and consistency.
+- Audit trail maintenance for significant technical and governance decisions.
+
+These controls help ensure consistent compliance throughout the software development lifecycle.
+
+# Audit Requirements
+
+To demonstrate ongoing compliance, the following audit requirements shall be maintained:
+
+- Architecture Decision Records (ADRs) for significant technical decisions.
+- Change history for governance documents.
+- Traceability between requirements, implementation, testing, and documentation.
+- Security review records for high-risk features.
+- Clinical review records for healthcare workflow changes.
+- Evidence of approval for governance, architecture, and compliance decisions.
+
+Audit evidence shall be retained in accordance with the organization's documentation and governance policies.
+
+# Compliance Monitoring
+
+Compliance shall be monitored continuously throughout the software development lifecycle.
+
+Monitoring activities include:
+
+- Periodic governance reviews.
+- Architecture compliance assessments.
+- Security compliance verification.
+- Clinical workflow validation.
+- Documentation quality reviews.
+- Internal compliance audits.
+- Corrective action tracking for identified non-compliance issues.
+
+Compliance monitoring results shall be documented and reviewed by the appropriate governance authority.
+
+# Approval
+
+This document is governed by:
+
+- AI-001 Enterprise AI Constitution
+- AI-002 Enterprise AI Governance
+- AI-003 AI Roles & Responsibilities
+- AI-004 AI Decision Framework
+
+Changes to this document require formal review and approval by the appropriate governance authority.
+
+---
+
+# Revision History
+
+| Version | Status | Description |
+|---------|--------|-------------|
+| 0.1.0 | Draft | Initial draft |
+| 1.0.0 | Approved | First approved release |
+
+---
 
 ---
