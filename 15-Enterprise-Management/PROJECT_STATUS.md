@@ -8,10 +8,10 @@
 | ------------- | ---------------- |
 | Document ID   | PM-001           |
 | Document Name | Project Status   |
-| Version       | 1.0              |
+| Version       | 1.1              |
 | Status        | Active           |
 | Owner         | LOUTAS Care Team |
-| Last Updated  | 2026-07-22       |
+| Last Updated  | 2026-07-29       |
 
 ---
 
@@ -54,6 +54,7 @@ Status:
 | Platform                | ⏳ Planned      |
 | Development             | ⏳ Planned      |
 | AI Governance           | ⏳ Planned      |
+| AI Engineering Framework (LAEF) | ✅ Complete — LAEF v1.0 Released |
 
 ---
 
@@ -70,6 +71,28 @@ Status:
 | Standard                           | Status      |
 | ---------------------------------- | ----------- |
 | LC-STD-001 Documentation Standards | ✅ Certified |
+
+---
+
+# Framework Releases
+
+| Release   | Scope                                       | Status      |
+| --------- | ------------------------------------------- | ----------- |
+| LAEF v1.0 | AI Engineering Framework — Phase 1 baseline | ✅ Released |
+
+---
+
+# AI Engineering Framework (LAEF)
+
+**Namespace:** `16-AI-Engineering-Framework` (governance) · `99-AI-Team` LAEF Workspace (execution)
+
+**Phase 1 — Framework Foundation:** ✅ Complete
+
+**Release:** LAEF v1.0 — ✅ Released
+
+Approved documents: README-LAEF, LAEF-001 (Vision & Mission), LAEF-002 (Core Principles & Philosophy), LAEF-003 (Scope & Objectives), LAEF-004 (Architecture Overview), LAEF-005 (Governance Overview), LAEF-006 (Versioning Strategy), LAEF-007 (Framework Roadmap), plus the LAEF v1.0 Release Manifest.
+
+Note: LAEF is distinct from the `11-AI` Artificial Intelligence Repository (which governs AI *product* capabilities).
 
 ---
 
@@ -126,6 +149,10 @@ Project Organization:
 Knowledge Base Version:
 
 Baseline v1.0 (Under Preparation)
+
+AI Engineering Framework:
+
+LAEF v1.0 (Released)
 
 ---
 

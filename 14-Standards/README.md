@@ -4,9 +4,9 @@
 **Document Classification:** Repository Documentation  
 **Owner:** LOUTAS Architecture Team  
 **Status:** Approved  
-**Version:** 1.0  
+**Version:** 1.1  
 **Created:** 2026-07-26  
-**Last Updated:** 2026-07-26  
+**Last Updated:** 2026-07-29  
 **Next Review:** 2027-07-26  
 **Approval Authority:** Chief Software Architect
 
@@ -58,7 +58,7 @@ The Standards Repository aims to:
 | STD-013-Versioning-Standards.md | Versioning and release identification |
 | STD-014-Testing-Standards.md *(Planned)* | Software testing standards |
 | STD-015-DevOps-Standards.md *(Planned)* | CI/CD and infrastructure standards |
-| STD-016-AI-Governance-Standards.md *(Planned)* | AI governance and responsible AI |
+| STD-016-AI-Governance-Standards.md *(Planned)* | AI governance and responsible AI — references LAEF (16-AI-Engineering-Framework) as the source of truth for AI-engineering governance; see LAEF v1.0 |
 
 ---
 
