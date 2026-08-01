@@ -79,6 +79,26 @@ The 99-AI-Team area is evolving into the **LAEF Workspace**, the execution tier 
 | LAEF-005 | LAEF Governance Overview | Approved v1.0 |
 | LAEF-006 | LAEF Versioning Strategy | Approved v1.0 |
 | LAEF-007 | LAEF Framework Roadmap | Approved v1.0 |
+| LAEF-008 | Layer Architecture Foundations & Design Principles | Approved v1.0 |
+| LAEF-009 | Foundation Tier Architecture | Approved v1.0 |
+| LAEF-010 | Knowledge & Context Tier Architecture | Approved v1.0 |
+| LAEF-011 | Execution Tier Architecture | Approved v1.0 |
+| LAEF-012 | Assurance & Evolution Tier Architecture | Approved v1.0 |
+| LAEF-013 | Engine-Set Design Specification | Approved v1.0 |
+| LAEF-014 | Context Engine Specification | Approved v1.0 |
+| LAEF-015 | Knowledge Engine Specification | Approved v1.0 |
+| LAEF-016 | Task Engine Specification | Approved v1.0 |
+| LAEF-017 | Decision Engine Specification | Approved v1.0 |
+| LAEF-018 | Workflow Engine Specification | Approved v1.0 |
+| LAEF-019 | Agent Engine Specification | Approved v1.0 |
+| LAEF-020 | Quality Engine Specification | Approved v1.0 |
+| LAEF-021 | Learning Engine Specification | Approved v1.0 |
+| LAEF-022 | Governance Detail Design Specification | Approved v1.0 |
+| LAEF-023 | Decision-Rights & Authority Matrix | Approved v1.0 |
+| LAEF-024 | Approval Gates Specification | Approved v1.0 |
+| LAEF-025 | Exception Handling Procedure | Approved v1.0 |
+| LAEF-026 | Audit & Traceability Specification | Approved v1.0 |
+| LAEF-027 | Compliance Verification Procedure | Approved v1.0 |
 
 Only documents in **Approved** or **Active** status are authoritative, in accordance with the documentation lifecycle. Statuses in this index shall be updated as each document progresses.
 
