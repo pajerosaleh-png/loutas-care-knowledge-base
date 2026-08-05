@@ -1,14 +1,21 @@
 # CLN-004 — SOAP Architecture Specification
 
-**Document ID:** CLN-004  
-**Title:** SOAP Architecture Specification  
-**Status:** Approved  
-**Priority:** Critical  
-**Category:** Clinical Architecture  
-**Implementation Status:** Ready  
-**Owner:** Clinical Architecture Team  
-**Version:** 1.0.0  
-**Last Updated:** July 2026
+**Document ID:** CLN-004
+**Title:** SOAP Architecture Specification
+**Status:** Updated — Pending Product Owner Review
+**Priority:** Critical
+**Category:** Clinical Architecture
+**Implementation Status:** Ready
+**Owner:** Clinical Architecture Team
+**Version:** 1.1.0
+**Last Updated:** 2026-08-04
+**Related ADR:** ADR-EMR-011 v1.0 — Encounter Closure, Electronic Signature, Read-Only Enforcement & Amendment
+
+---
+
+# Change Summary (v1.0.0 → v1.1.0)
+
+Synchronized with the approved ADR-EMR-011. The SOAP lifecycle read-only state is renamed from **Locked** to **Signed** to match the Encounter's electronic-signature closure; SOAP content becomes read-only when the **Encounter** is signed, and post-signature changes occur only through a signed Addendum. Business rules BR-003/BR-004 are clarified accordingly. No documentation workflow is redesigned and no rule beyond ADR-EMR-011 is introduced. All SOAP components and other sections are preserved.
 
 ---
 
@@ -108,11 +115,13 @@ Completed
 
 ↓
 
-Locked
+Signed
 
 ↓
 
 Archived
+
+SOAP follows the Encounter lifecycle. SOAP becomes read-only when the Encounter is **Signed** *(ADR-EMR-011)*.
 
 ---
 
@@ -138,11 +147,13 @@ Clinical decisions become available for downstream workflows.
 
 ---
 
-## Locked
+## Signed *(ADR-EMR-011)*
 
-SOAP becomes read-only.
+The Encounter has been electronically signed; SOAP becomes read-only.
 
-Editing requires authorized reopening.
+Post-signature changes occur only through a signed Addendum; the original SOAP content is preserved.
+
+(Previously named "Locked". Renamed to align with the Encounter electronic-signature model.)
 
 ---
 
@@ -302,13 +313,13 @@ Only authorized providers may complete SOAP documentation.
 
 ## BR-003
 
-Completed SOAP documentation becomes read-only.
+SOAP is editable only while the Encounter is In Progress; upon Encounter signature SOAP becomes read-only. *(Updated — ADR-EMR-011)*
 
 ---
 
 ## BR-004
 
-Reopening completed documentation requires authorization.
+A signed Encounter's SOAP is amended only through a signed Addendum; the original is preserved. Reopening a signed Encounter is an exceptional supervised action (CLN-002). *(Updated — ADR-EMR-011)*
 
 ---
 
@@ -463,9 +474,11 @@ SOAP Modified
 
 SOAP Completed
 
-SOAP Locked
+SOAP Read-Only (Encounter Signed)
 
-SOAP Reopened
+SOAP Addendum Added
+
+Encounter Reopened (Supervised)
 
 Diagnosis Added
 
@@ -527,6 +540,10 @@ CLN-003 — Patient Journey Specification
 
 CLN-005 — Clinical Orders Architecture
 
+CLN-006 — Clinical Documents Architecture
+
+ADR-EMR-011 — Encounter Closure, Electronic Signature, Read-Only Enforcement & Amendment
+
 ARCH-003 — Domain Architecture
 
 ---
@@ -536,3 +553,4 @@ ARCH-003 — Domain Architecture
 | Version | Date | Description |
 |----------|------|-------------|
 | 1.0.0 | July 2026 | Initial Enterprise Release |
+| 1.1.0 | 2026-08-04 | Synchronized with ADR-EMR-011: SOAP lifecycle state Locked → Signed; SOAP becomes read-only at Encounter signature; post-signature amendment via signed Addendum; BR-003/BR-004 clarified; audit events updated. No workflow redesign. |
