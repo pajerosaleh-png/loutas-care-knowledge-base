@@ -4,12 +4,29 @@
 |----------|-------|
 | Document ID | APT-005 |
 | Domain | Appointment |
-| Status | Draft |
-| Version | 1.0 |
+| Status | Updated — Pending Product Owner Review |
+| Version | 1.1 |
 | Owner | Business Architecture |
-| Last Updated | 2026-07-22 |
+| Last Updated | 2026-08-04 |
 | Depends On | APT-001, APT-002, APT-003, APT-004 |
-| Related Documents | APT-006, APT-009 |
+| Related Documents | APT-006, APT-009, REC-006 |
+| Related ADRs | ADR-003 v1.1 (Appointment Architecture); ADR-EMR-011 v1.0 (Care Team / Visit Owner) |
+| Reason for Update | Synchronize business rules with the approved ADR-003 v1.1 clarifications (Care Team ownership, reschedule validation, reassignment, walk-in capacity configuration). |
+
+---
+
+# Change Summary (v1.0 → v1.1)
+
+Synchronized with ADR-003 v1.1. No new numbered business rule is introduced and no workflow is redesigned. Modifications:
+
+- **BR-014** clarified to include provider (Visit Owner) reassignment as an audited change (ADR-003 AD-015).
+- **Section 8 (Clinical Handover Rules)** clarified with the operational vs clinical Care Team ownership split (ADR-003 AD-018).
+- **BR-031** clarified to include scheduling-conflict / double-booking revalidation on reschedule (ADR-003 AD-013).
+- **BR-045** example list extended with **Walk-In Capacity** (ADR-003 AD-017).
+- **Core Business Principles** note added: the appointment assigns the Visit Owner and operational Care Team (ADR-003 AD-014 / AD-018).
+
+---
+
 APT-005 — Appointment Business Rules
 
 1. Purpose
@@ -30,6 +47,9 @@ Every appointment represents one scheduled healthcare service.
 Business rules shall be configuration-driven whenever possible.
 All operational activities shall be traceable and auditable.
 Appointment behavior shall remain specialty-independent.
+
+Note (ADR-003 AD-014 / AD-018): the appointment assigns the Visit Owner (responsible provider) and the operational Care Team; the EMR owns the clinical Care Team after Start Visit.
+
 3. Patient Rules
 BR-001
 
@@ -99,7 +119,7 @@ Resource availability shall be validated before appointment confirmation.
 
 BR-014
 
-Changes to allocated resources shall preserve appointment history.
+Changes to allocated resources — including provider (Visit Owner) reassignment — shall preserve appointment history and shall be audited (ADR-003 AD-015).
 
 6. Confirmation Rules
 BR-015
@@ -155,6 +175,8 @@ BR-024
 
 Appointment status changes after clinical handover shall be initiated by Patient Journey where applicable.
 
+Note (ADR-003 AD-018): the Appointment domain owns the operational Care Team (scheduling-time assignment of provider and, optionally, nurse and resources). At Start Visit the EMR owns the clinical Care Team; clinical Care Team modifications are governed by ADR-EMR-011. The Appointment domain does not modify the clinical Care Team.
+
 9. Cancellation Rules
 BR-025
 
@@ -183,7 +205,7 @@ The original appointment shall remain historically traceable.
 
 BR-031
 
-Resource availability shall be revalidated after rescheduling.
+Provider availability and scheduling conflicts (double-booking) shall be revalidated before a reschedule is committed (ADR-003 AD-013).
 
 11. No Show Rules
 BR-032
@@ -279,6 +301,7 @@ Confirmation
 Cancellation
 No Show
 Walk-In
+Walk-In Capacity
 Early Check-In
 Late Arrival
 Waiting List
@@ -314,6 +337,7 @@ Scalable enterprise architecture.
 High maintainability.
 Reusable scheduling capabilities across all healthcare specialties.
 Future extensibility for advanced scheduling and resource management.
+
 ---
 
 # Change History
@@ -321,6 +345,7 @@ Future extensibility for advanced scheduling and resource management.
 | Version | Date | Description |
 |----------|------|-------------|
 | 1.0 | 2026-07-22 | Initial Draft |
+| 1.1 | 2026-08-04 | Synchronized with ADR-003 v1.1: BR-014 (audited reassignment), Section 8 Care Team ownership split, BR-031 (reschedule conflict revalidation), BR-045 (Walk-In Capacity policy), Core Principles note (Visit Owner / operational Care Team). No new numbered rules; no redesign. |
 
 ---
 
