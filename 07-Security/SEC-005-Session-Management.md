@@ -5,10 +5,17 @@
 | Document ID | SEC-005 |
 | Document Title | Session Management |
 | Book | LC-BOOK-001 Product Specification |
-| Version | 1.0 |
-| Status | Draft |
+| Version | 1.1 |
+| Status | Updated — Pending Product Owner Review |
 | Owner | Enterprise Architecture Office |
-| Last Updated | 2026-07-25 |
+| Last Updated | 2026-08-04 |
+| Related Architecture Decision | Security Architecture Review — Phase 2.1 Production Security Hardening (approved) |
+
+---
+
+# Change Summary (v1.0 → v1.1)
+
+This revision synchronizes Session Management with the approved Phase 2.1 Production Security Hardening decisions. No new policy is introduced. The previously unspecified **Session Timeout** and **Session Protection** sections are updated to record the approved token-session baseline (absolute lifetime, signed token bound to a mandatory secret, re-authentication on expiry, transport protection). All existing principles are preserved.
 
 ---
 
@@ -77,7 +84,10 @@ Implementation details are outside the scope of this document.
 
 Sessions shall be protected against unauthorized use throughout their lifecycle.
 
-Protection mechanisms shall be determined by the approved implementation architecture.
+*(Synchronized — Phase 2.1 Production Security Hardening)*
+
+- Where the session is represented by a signed token, that token shall be signed with the **mandatory** server-held signing secret governed by the Authentication Policy (SEC-002). A session token can therefore never be issued or validated without an approved secret.
+- Session tokens shall be transmitted **only over encrypted channels** (TLS), as governed by Data Protection and Encryption (SEC-007) and API Security (SEC-008).
 
 ---
 
@@ -91,9 +101,16 @@ This document does not mandate a specific concurrency model.
 
 # Session Timeout
 
-Session timeout behavior shall be defined by implementation governance.
+*(Synchronized — Phase 2.1 Production Security Hardening)*
 
-Timeout values are implementation decisions and are not prescribed by this document.
+Authenticated sessions shall be time-bound.
+
+- The **approved baseline absolute session lifetime is 8 hours** from establishment.
+- Upon expiry, the session shall immediately lose access to protected resources, and the user shall be required to **re-authenticate**.
+- A distinct session-renewal (refresh) mechanism is not currently provided; re-authentication is required on expiry.
+- The absolute lifetime is organization-configurable within approved security governance.
+
+Idle-timeout and administrative-timeout behavior remain governed by the Security functional requirements (FR-SEC-003.5) and the Security Standards (STD-006 §7).
 
 ---
 
@@ -103,10 +120,11 @@ Sessions shall terminate when:
 
 - The user signs out.
 - Authentication is no longer valid.
+- The session reaches its absolute lifetime.
 - Security governance requires termination.
 - System conditions require controlled session closure.
 
-Termination events should preserve audit information.
+Administrative or forced termination shall immediately invalidate the affected session. Termination events should preserve audit information.
 
 ---
 
@@ -162,6 +180,7 @@ This document supports:
 
 - SEC-006 Audit and Logging
 - SEC-007 Data Protection and Encryption
+- SEC-008 API Security
 - Database Documentation
 - Enterprise Architecture
 
@@ -172,3 +191,4 @@ This document supports:
 | Version | Date | Description |
 |----------|------|-------------|
 | 1.0 | 2026-07-25 | Initial Release |
+| 1.1 | 2026-08-04 | Synchronized with approved Phase 2.1 Production Security Hardening: recorded approved token-session baseline — 8-hour absolute lifetime, signed token bound to the mandatory signing secret, re-authentication on expiry, transport protection over TLS. No workflow redesign. |
