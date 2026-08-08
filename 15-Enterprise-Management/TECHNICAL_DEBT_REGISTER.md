@@ -9,7 +9,7 @@
 | Document ID   | PM-005 (provisional — pending Enterprise Management registry confirmation) |
 | Document Name | Engineering Technical Debt Register |
 | Area          | 15-Enterprise-Management |
-| Version       | 1.1 |
+| Version       | 1.2 |
 | Status        | Active (ongoing governance artifact) |
 | Milestone     | M-018 — Established |
 | Owner         | Lead Engineer / Chief Solution Architect |
@@ -31,7 +31,8 @@ Severity: **High** (risks correctness/data), **Medium** (limits a feature or cre
 
 | ID | Title | Origin | Severity | Resolution owner | Status |
 |----|-------|--------|----------|------------------|--------|
-| TD-S2-001 | Persisted terminal kept as `DONE` (canonical `COMPLETED` deferred) | S2 | Medium | S9 — EMR Completion Integration | Open |
+| TD-S2-001 | Persisted terminal `DONE` → canonical `COMPLETED` | S2 | Medium | S9 | **Resolved (S9)** |
+| TD-EMR-001 | EMR `Visit.status` vocabulary reconciliation (schema `OPEN/SIGNED/LOCKED` vs code `IN_PROGRESS/COMPLETED/CANCELLED`) | EMR | Medium | Future EMR slice | Open |
 | TD-S2-002 | Legacy appointment/patient pages spot-patched for the canonical lifecycle | S2 | Medium | S10 — Reception Workspace | Open |
 | TD-S3-001 | S3 conflict-detection deferrals (room dormant; legacy exact-slot guard vs config overbooking) | S3 | Medium | Future Room domain / conflict-engine consolidation | Open |
 | TD-S5-001 | Operational Care Team deferred (no consumer until S6/S10) | S5 | Medium | S6 Queue / S10 Reception | Open |
@@ -41,7 +42,7 @@ Severity: **High** (risks correctness/data), **Medium** (limits a feature or cre
 
 ## TD-S2-001 — Persisted terminal status remains `DONE`
 
-**Status:** Open · **Severity:** Medium · **Origin:** Slice S2 · **Resolution owner:** S9 (EMR Completion Integration)
+**Status:** Resolved (S9) · **Severity:** Medium · **Origin:** Slice S2 · **Resolved by:** S9
 
 **Description.** The canonical appointment lifecycle (ADR-003 v1.1) names the completion terminal `COMPLETED`, but the running system persists it as `DONE`. S2 kept `DONE` as the stored value and treats `COMPLETED` as an alias (`STATUS_CANON`), to preserve backward compatibility for existing readers. No stored value was changed.
 
@@ -59,7 +60,9 @@ Severity: **High** (risks correctness/data), **Medium** (limits a feature or cre
 
 **Closure criterion.** No reader references `DONE`; stored value is `COMPLETED`; backfill applied; alias removed — all in a single S9 change set.
 
-**Cross-references.** ADR-003 v1.1 §3.1 (state reconciliation) · ADR-EMR-011 v1.0 (encounter `COMPLETED`) · IP-001 Slice S9 · **EMR `Visit.status` vocabulary reconciliation** (schema `OPEN/SIGNED/LOCKED` vs code `IN_PROGRESS/COMPLETED/CANCELLED`) — this appointment-terminal rename and the encounter-status reconciliation are coupled and should be resolved in the same S9 pass to avoid two migrations on the same seam.
+**Resolution (S9).** Stored terminal flipped `DONE → COMPLETED` with backward-compatible dual-read (`canonStatus` maps legacy `done/DONE → COMPLETED`) and a one-time reversible backfill; `doneAt` retained; the appointment→visit completion side-effect repointed to `COMPLETED`. Verified no consumer outside the appointment domain reads the token (billing relates by `appointmentId`, not status); frontend maps `COMPLETED → 'Done'`.
+
+**Cross-references.** ADR-003 v1.1 §3.1 · IP-001 Slice S9 · TD-EMR-001 (the coupled EMR reconciliation, now split out — see below).
 
 ---
 
@@ -136,9 +139,24 @@ Severity: **High** (risks correctness/data), **Medium** (limits a feature or cre
 
 ---
 
+## TD-EMR-001 — EMR `Visit.status` vocabulary reconciliation
+
+**Status:** Open · **Severity:** Medium · **Origin:** identified at S9 · **Resolution owner:** future EMR slice
+
+**Description.** The EMR `Visit` model has a stale/inconsistent status vocabulary: schema declares `@default("OPEN") // OPEN | SIGNED | LOCKED`, while `visits.ts` creates/queries with `IN_PROGRESS` and sets `COMPLETED`/`CANCELLED` (with `closedAt`) on the appointment-driven completion side-effect. No `SIGNED`/`LOCKED` write path exists (the ADR-EMR-011 clinical signing lifecycle is not implemented in code).
+
+**Why separate (not blocking S9).** Appointment completion already drives visit closure (`status='COMPLETED', closedAt`) via the existing appointment→visit side-effect, so S9's business objective is met without touching EMR clinical code. Reconciling the `Visit.status` vocabulary is a clinical-domain cleanup, independent of the appointment terminal rename.
+
+**Resolution plan.** In a dedicated EMR slice, reconcile `Visit.status` to one canonical set aligned with ADR-EMR-011 (implement the Signed/close lifecycle), correct the schema default/comment, and — if desired — add EMR-driven completion. No ADR change is implied by this record.
+
+**Cross-references.** ADR-EMR-011 v1.0 (encounter lifecycle) · ADR-003 v1.1 · TD-S2-001 (resolved; formerly coupled) · IP-001 (future EMR slice).
+
+---
+
 ## Revision History
 
 | Version | Date | Description |
 |---------|------|-------------|
 | 1.0 | 2026-08-06 | Register created; recorded TD-S2-001, TD-S2-002, TD-S3-001. |
 | 1.1 | 2026-08-06 | Recorded TD-S5-001 (Care Team deferred) and TD-S5-002 (PATCH doctorId deprecation). |
+| 1.2 | 2026-08-08 | TD-S2-001 marked Resolved (S9); EMR Visit.status reconciliation split out as TD-EMR-001 (future EMR cleanup). |
