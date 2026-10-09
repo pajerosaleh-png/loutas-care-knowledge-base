@@ -3,6 +3,15 @@
 All notable changes to the LOUTAS Care Knowledge Base are documented here.
 The LOUTAS AI Engineering Framework (LAEF) follows the two-level versioning model defined in LAEF-006.
 
+## Repository — 2026-10-09
+
+### Added
+- ADR-011 Multi-Specialty Architecture — specialty registry, clinic specialties, primary specialty, Core EMR vs General Practice, configurable-by-specialty EMR. Records the Gate 1 implementation and labels Gates 2–9 as planned.
+
+### Changed
+- Registry/API_REGISTRY.md v1.1 — first entries: the three Gate 1 Specialty Registry endpoints; later-gate endpoints listed as planned only.
+- ADR/README.md — ADR-011 added to the index.
+
 ## Repository — 2026-07-31
 
 ### Added
