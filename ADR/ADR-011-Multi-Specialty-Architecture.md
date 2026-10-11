@@ -25,7 +25,7 @@
 | Part | Gate | State |
 |---|---|---|
 | Specialty Registry, Clinic Specialty, Primary Specialty, three registry APIs, audit scope columns | Gate 1 | **Implemented** on `main` of `loutascare-backend` (commit `6b13ac2`); applied to the development database and verified on 2026-10-11 |
-| Clinic Setup specialty screen; booking uses the registry | Gate 2 | **Implemented on branch `gate-2`** of `loutascare-backend` (`6d18b11`) and `loutascare-frontend` (`5ee7d1f`); under review — **not on `main`**, not yet verified on the development database |
+| Clinic Setup specialty screen; booking uses the registry | Gate 2 | **Implemented on branch `gate-2`** of `loutascare-backend` (`6d18b11`) and `loutascare-frontend` (`4b735ea`); under review — **not on `main`**. Validated by automated tests and an end-to-end run of the real handlers over an in-memory database double; **not yet verified on the development database** |
 | Configurable-by-specialty EMR / module resolver | Gate 3 | Planned — not implemented |
 | Dental module (overview, odontogram, examination, treatment plan, imaging) | Gates 4–8 | Planned — not implemented |
 | Security and audit hardening | Gate 9 | Planned — not implemented |
@@ -174,6 +174,10 @@ Gate 2 adds no table and no column. It connects what Gate 1 built:
 - **Editing an old appointment does not rewrite its specialty.** On `PATCH`, a specialty equal to the stored value (literally, or after normalisation) is left exactly as stored. Only a real change is validated. Clearing the value is still allowed.
 - **Appointment reads gain three additive fields** — `specialtyKey`, `specialtyName`, `specialtyNameAr` — computed at read time. The stored `specialty` value is returned unchanged; a value outside the registry has `specialtyKey: null` and its raw text as the name.
 - **Booking and appointment-edit dropdowns** list the clinic's enabled specialties and send registry keys.
+
+**Validation recorded on 2026-10-11 (review):** backend suite 231 tests; an end-to-end browser run of the real frontend against the real Gate 1 and Gate 2 route handlers over an in-memory database double (new booking, dental-only configuration, primary rules, audit rows, opening and editing existing appointments, tenant scope, permission refusal). No run against the development database or a real PostgreSQL instance has been made; that remains the Product Owner's acceptance test.
+
+**Known effect outside Gate 2's screens:** a visit started from a Gate 2 booking carries the registry key in `Visit.specialtyKey`. Screens that print that value as stored (the EMR notes list) show the key (for example `cardiology`) until Gate 3 adds the display name on patient-record reads.
 
 Gate 2 does **not** change visits, the Patient EMR, the Doctor Workspace, the walk-in service library, permissions or any stored historical value.
 
