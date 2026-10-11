@@ -4,7 +4,7 @@
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
 **Status:** Approved  
-**Version:** 1.2  
+**Version:** 1.3  
 **Created:** 2026-10-09  
 **Last Updated:** 2026-10-11  
 **Next Review:** 2027-10-09  
@@ -25,7 +25,7 @@
 | Part | Gate | State |
 |---|---|---|
 | Specialty Registry, Clinic Specialty, Primary Specialty, three registry APIs, audit scope columns | Gate 1 | **Implemented** on `main` of `loutascare-backend` (commit `6b13ac2`); applied to the development database and verified on 2026-10-11 |
-| Clinic Setup specialty screen; booking uses the registry | Gate 2 | Planned — not implemented |
+| Clinic Setup specialty screen; booking uses the registry | Gate 2 | **Implemented on branch `gate-2`** of `loutascare-backend` (`6d18b11`) and `loutascare-frontend` (`4b735ea`); under review — **not on `main`**. Validated by automated tests and an end-to-end run of the real handlers over an in-memory database double; **not yet verified on the development database** |
 | Configurable-by-specialty EMR / module resolver | Gate 3 | Planned — not implemented |
 | Dental module (overview, odontogram, examination, treatment plan, imaging) | Gates 4–8 | Planned — not implemented |
 | Security and audit hardening | Gate 9 | Planned — not implemented |
@@ -162,6 +162,27 @@ See `Registry/API_REGISTRY.md` for the three Gate 1 endpoints.
 
 ---
 
+# Gate 2 — Clinic Setup specialty configuration
+
+Gate 2 adds no table and no column. It connects what Gate 1 built:
+
+- **Specialties screen** (`app/admin/specialties`) reads `GET /specialties` and saves each enable / disable and primary change through the Gate 1 endpoints. There is no local draft state and no "core" lock; the primary specialty cannot be switched off from the screen (the server refuses it as well).
+- **Appointment specialty is validated against the registry** on `POST /appointments`, `PATCH /appointments/:id` and `POST /appointments/walk-in`, through one service function (`resolveBookingSpecialty`):
+  - blank → the clinic's primary specialty key;
+  - a registry key or a known legacy label (for example "General", "Paediatrics") → stored as the registry key, if the clinic has that specialty enabled;
+  - unknown → `400 SPECIALTY_UNKNOWN`; known but not enabled for the clinic → `400 SPECIALTY_NOT_ENABLED`.
+- **Editing an old appointment does not rewrite its specialty.** On `PATCH`, a specialty equal to the stored value (literally, or after normalisation) is left exactly as stored. Only a real change is validated. Clearing the value is still allowed.
+- **Appointment reads gain three additive fields** — `specialtyKey`, `specialtyName`, `specialtyNameAr` — computed at read time. The stored `specialty` value is returned unchanged; a value outside the registry has `specialtyKey: null` and its raw text as the name.
+- **Booking and appointment-edit dropdowns** list the clinic's enabled specialties and send registry keys.
+
+**Validation recorded on 2026-10-11 (review):** backend suite 231 tests; an end-to-end browser run of the real frontend against the real Gate 1 and Gate 2 route handlers over an in-memory database double (new booking, dental-only configuration, primary rules, audit rows, opening and editing existing appointments, tenant scope, permission refusal). No run against the development database or a real PostgreSQL instance has been made; that remains the Product Owner's acceptance test.
+
+**Known effect outside Gate 2's screens:** a visit started from a Gate 2 booking carries the registry key in `Visit.specialtyKey`. Screens that print that value as stored (the EMR notes list) show the key (for example `cardiology`) until Gate 3 adds the display name on patient-record reads.
+
+Gate 2 does **not** change visits, the Patient EMR, the Doctor Workspace, the walk-in service library, permissions or any stored historical value.
+
+---
+
 # Gate 1 boundary
 
 Gate 1 does **not**:
@@ -222,7 +243,8 @@ The baseline task is not part of Gate 1 or its cleanup. It needs its own approva
 
 **Negative / to manage**
 
-- Until Gate 2, the frontend still uses its hard-coded specialty lists.
+- Until Gate 2 is merged, the frontend on `main` still uses its hard-coded specialty lists.
+- From Gate 2, a booking or walk-in sent without a specialty stores the clinic's primary specialty key (before Gate 2 it stored no value).
 - Legacy values that match no registry entry resolve to "unknown" and receive the Core EMR.
 - Until the proposed schema-change policy is approved, each schema gate must state how its change is applied (migration or `db push`) and be coordinated on the shared database.
 
