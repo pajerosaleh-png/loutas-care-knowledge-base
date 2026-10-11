@@ -4,7 +4,7 @@
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
 **Status:** Approved  
-**Version:** 1.1  
+**Version:** 1.2  
 **Created:** 2026-10-09  
 **Last Updated:** 2026-10-11  
 **Next Review:** 2027-10-09  
@@ -130,7 +130,7 @@ Backend only. No frontend, appointment, visit, EMR, dental or billing change.
 
 All changes are additive. Gate 1 was applied to the development database by the Prisma migration `20261010_specialty_registry_gate1` (`prisma/migrations/20261010_specialty_registry_gate1/migration.sql`). No existing column is renamed, retyped or removed.
 
-This departs from the `prisma db push` convention used for earlier schema changes. The earlier migrations in the repository do not reflect the full schema, so the migrations folder alone cannot rebuild the database. A consistent migration-versus-`db push` policy for later gates is to be decided separately; this ADR does not set it.
+This departs from the `prisma db push` convention used for earlier schema changes. The earlier migrations in the repository do not reflect the full schema, so the migrations folder alone cannot rebuild the database. A policy for later gates is proposed, not yet approved, in the section "Proposed schema-change policy" below.
 
 ## Specialty service — the single server authority
 
@@ -175,6 +175,27 @@ Gate 1 does **not**:
 
 ---
 
+# Proposed schema-change policy (pending approval — not in force)
+
+**Status: Proposed.** This section records a proposal for the Product Owner to approve before Gate 5, the next gate that changes the schema. Until it is approved, no policy change is in effect, and nothing described here has been done.
+
+**Proposal**
+
+1. Future schema changes are made through reviewed Prisma migration files, as Gate 1 was.
+2. A separate baseline task is prepared for the existing database schema, so that the migration history can describe the whole schema.
+3. Before anything is created or baselined, the current development and production schemas and the existing migration history are inspected and compared.
+4. A baseline is never applied, a migration is never marked as applied, and no schema-changing command is run against a shared or production database without a separate, explicit approval for that action.
+
+**What does not exist yet**
+
+- No baseline migration has been created.
+- No baseline has been applied or marked as applied on any database.
+- The migrations folder still cannot rebuild the database on its own.
+
+The baseline task is not part of Gate 1 or its cleanup. It needs its own approval, scope and verification before Gate 5.
+
+---
+
 # Alternatives considered
 
 | Alternative | Why rejected |
@@ -203,7 +224,7 @@ Gate 1 does **not**:
 
 - Until Gate 2, the frontend still uses its hard-coded specialty lists.
 - Legacy values that match no registry entry resolve to "unknown" and receive the Core EMR.
-- Each schema gate must state how its change is applied (migration or `db push`) and be coordinated on the shared database.
+- Until the proposed schema-change policy is approved, each schema gate must state how its change is applied (migration or `db push`) and be coordinated on the shared database.
 
 ---
 
