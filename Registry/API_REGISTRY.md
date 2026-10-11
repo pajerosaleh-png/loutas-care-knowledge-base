@@ -2,7 +2,7 @@
 
 Status: Draft
 
-Version: 1.2
+Version: 1.3
 
 Last Updated: 2026-10-11
 
@@ -97,11 +97,44 @@ The previous primary becomes non-primary; exactly one primary remains.
 
 ---
 
+## Appointment specialty (Gate 2)
+
+Source: `loutascare-backend` · `src/routes/appointments.ts` · rule in
+`src/lib/specialtyService.ts` (`resolveBookingSpecialty`, `describeSpecialty`).
+State: **on branch `gate-2` (commit `6d18b11`), under review — not on `main`.**
+No new endpoint; three existing endpoints change behaviour and appointment
+reads gain fields.
+
+| Method | Path | Gate 2 change |
+|---|---|---|
+| POST | `/appointments` | `specialty` is resolved against the clinic registry |
+| PATCH | `/appointments/:id` | A changed `specialty` is resolved against the clinic registry; an unchanged value is left as stored; blank clears it |
+| POST | `/appointments/walk-in` | `specialty` is resolved against the clinic registry |
+| GET | appointment reads | Each appointment also carries `specialtyKey`, `specialtyName`, `specialtyNameAr` |
+
+Resolution of the request `specialty`:
+
+| Sent | Stored |
+|---|---|
+| blank / absent (booking, walk-in) | the clinic's primary specialty key |
+| registry key or known legacy label, enabled for the clinic | the registry key |
+| not in the registry | refused — `400 SPECIALTY_UNKNOWN` |
+| in the registry but not enabled for the clinic | refused — `400 SPECIALTY_NOT_ENABLED` |
+
+`409 PRIMARY_INVARIANT_VIOLATED` is returned when a blank value cannot be
+resolved because the clinic has no single primary specialty.
+
+Read fields: `specialty` is the stored value, unchanged. `specialtyKey` is the
+registry key or `null` when the stored value is outside the registry;
+`specialtyName` / `specialtyNameAr` are the registry names (raw stored text and
+an empty string when outside the registry). No stored value is rewritten.
+
+---
+
 ## Planned (not implemented)
 
 | Gate | Endpoints | State |
 |---|---|---|
-| 2 | Specialty validation on `POST /appointments`, `PATCH /appointments/:id`, `POST /appointments/walk-in` | Planned |
 | 3 | `specialtyKey` and `visitType` added to the visit summary of `GET /patients/:patientId/record` | Planned |
 | 4–6 | Dental summary, chart, findings and examination endpoints | Planned |
 | 7 | Treatment plan endpoints | Planned |
