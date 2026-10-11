@@ -3,6 +3,22 @@
 All notable changes to the LOUTAS Care Knowledge Base are documented here.
 The LOUTAS AI Engineering Framework (LAEF) follows the two-level versioning model defined in LAEF-006.
 
+## Repository — 2026-10-11
+
+### Changed
+- ADR-011 v1.1 — Gate 1 is on `main` of `loutascare-backend` (commit `6b13ac2`) and verified on the development database; the schema was applied by Prisma migration `20261010_specialty_registry_gate1`, not `prisma db push`; the registry was initialised by a specialty-only run.
+- Registry/API_REGISTRY.md v1.2 — Gate 1 endpoints now recorded as on `main`.
+- ADR-011 v1.2 — adds a proposed (not approved) schema-change policy: reviewed Prisma migrations for future changes and a separate baseline task before Gate 5. No baseline migration exists; none was created or applied.
+
+## Repository — 2026-10-09
+
+### Added
+- ADR-011 Multi-Specialty Architecture — specialty registry, clinic specialties, primary specialty, Core EMR vs General Practice, configurable-by-specialty EMR. Records the Gate 1 implementation and labels Gates 2–9 as planned.
+
+### Changed
+- Registry/API_REGISTRY.md v1.1 — first entries: the three Gate 1 Specialty Registry endpoints; later-gate endpoints listed as planned only.
+- ADR/README.md — ADR-011 added to the index.
+
 ## Repository — 2026-07-31
 
 ### Added

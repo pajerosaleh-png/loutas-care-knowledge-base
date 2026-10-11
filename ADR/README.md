@@ -72,6 +72,7 @@ Architecture Decision Records shall be created for decisions involving:
 | ADR-008-Audit-Logging-Architecture.md | Audit logging architecture |
 | ADR-009-Deployment-Architecture.md | Deployment architecture |
 | ADR-010-Integration-Architecture.md | Integration architecture |
+| ADR-011-Multi-Specialty-Architecture.md | Multi-specialty architecture: specialty registry, clinic specialties, configurable EMR |
 
 Additional ADRs may be added as new architectural decisions arise.
 
