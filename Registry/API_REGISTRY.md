@@ -2,12 +2,12 @@
 
 Status: Draft
 
-Version: 1.1
+Version: 1.2
 
-Last Updated: 2026-10-09
+Last Updated: 2026-10-11
 
 This registry is being populated gate by gate. An endpoint listed here exists in
-code on the branch stated. Endpoints of later gates are listed only under
+code on `main` unless stated otherwise. Endpoints of later gates are listed only under
 "Planned" and are **not implemented**.
 
 Conventions for every endpoint: JSON over HTTPS · `Authorization: Bearer <token>` ·
@@ -19,7 +19,7 @@ scope is taken from the authenticated session, never from client input.
 ## Specialty Registry (Gate 1)
 
 Source: `loutascare-backend` · `src/routes/specialties.ts` · rules in
-`src/lib/specialtyService.ts` · branch `gate-1` (pending review and merge).
+`src/lib/specialtyService.ts` · `main` (commit `6b13ac2`).
 Architecture: `ADR/ADR-011-Multi-Specialty-Architecture.md`.
 
 | Method | Path | Purpose | Authorisation |

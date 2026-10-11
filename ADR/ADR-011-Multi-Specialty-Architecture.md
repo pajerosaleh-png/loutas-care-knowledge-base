@@ -4,9 +4,9 @@
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
 **Status:** Approved  
-**Version:** 1.0  
+**Version:** 1.1  
 **Created:** 2026-10-09  
-**Last Updated:** 2026-10-09  
+**Last Updated:** 2026-10-11  
 **Next Review:** 2027-10-09  
 **Approval Authority:** Product Owner (decisions of 2026-10-08 and 2026-10-09)
 
@@ -24,7 +24,7 @@
 
 | Part | Gate | State |
 |---|---|---|
-| Specialty Registry, Clinic Specialty, Primary Specialty, three registry APIs, audit scope columns | Gate 1 | **Implemented** on branch `gate-1` of `loutascare-backend` (pending review, database installation and merge) |
+| Specialty Registry, Clinic Specialty, Primary Specialty, three registry APIs, audit scope columns | Gate 1 | **Implemented** on `main` of `loutascare-backend` (commit `6b13ac2`); applied to the development database and verified on 2026-10-11 |
 | Clinic Setup specialty screen; booking uses the registry | Gate 2 | Planned — not implemented |
 | Configurable-by-specialty EMR / module resolver | Gate 3 | Planned — not implemented |
 | Dental module (overview, odontogram, examination, treatment plan, imaging) | Gates 4–8 | Planned — not implemented |
@@ -128,7 +128,9 @@ Backend only. No frontend, appointment, visit, EMR, dental or billing change.
 | `ClinicSpecialty` | A clinic's enabled and primary state | `clinicId` (scalar tenant scope, no relation to `Clinic`), `specialtyKey` → `Specialty.key`, `enabled`, `isPrimary`, `enabledById`, `enabledAt`, `disabledById`, `disabledAt`, `createdAt`, `updatedAt`; unique (`clinicId`, `specialtyKey`); index (`clinicId`, `enabled`) |
 | `AuditLog` (existing) | Scope for new audit rows | Added nullable `clinicId`, `patientId`, `visitId`; index (`clinicId`, `createdAt`). Existing rows keep null |
 
-All changes are additive and applied with `prisma db push`, the project's current schema-sync convention. No existing column is renamed, retyped or removed.
+All changes are additive. Gate 1 was applied to the development database by the Prisma migration `20261010_specialty_registry_gate1` (`prisma/migrations/20261010_specialty_registry_gate1/migration.sql`). No existing column is renamed, retyped or removed.
+
+This departs from the `prisma db push` convention used for earlier schema changes. The earlier migrations in the repository do not reflect the full schema, so the migrations folder alone cannot rebuild the database. A consistent migration-versus-`db push` policy for later gates is to be decided separately; this ADR does not set it.
 
 ## Specialty service — the single server authority
 
@@ -147,6 +149,8 @@ Guaranteed invariants: exactly one primary per configured clinic; the primary is
 ## Initial clinic configuration
 
 A clinic with no registry rows receives: General Practice enabled and primary; Cardiology, Dermatology and Pediatrics enabled; Dental, Nutrition, Fitness, Endoscopy and Psychiatry disabled. An already-configured clinic is never changed by the seed.
+
+On the development database the registry was initialised by a specialty-only run of the two service functions (`seedSpecialtyRegistry`, `ensureClinicConfigured`), not by the full seed script, so no user, role or permission data was touched.
 
 ## APIs
 
@@ -199,7 +203,7 @@ Gate 1 does **not**:
 
 - Until Gate 2, the frontend still uses its hard-coded specialty lists.
 - Legacy values that match no registry entry resolve to "unknown" and receive the Core EMR.
-- `prisma db push` on the shared database must be coordinated for every schema gate.
+- Each schema gate must state how its change is applied (migration or `db push`) and be coordinated on the shared database.
 
 ---
 

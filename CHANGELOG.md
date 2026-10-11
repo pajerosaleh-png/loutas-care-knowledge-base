@@ -3,6 +3,12 @@
 All notable changes to the LOUTAS Care Knowledge Base are documented here.
 The LOUTAS AI Engineering Framework (LAEF) follows the two-level versioning model defined in LAEF-006.
 
+## Repository — 2026-10-11
+
+### Changed
+- ADR-011 v1.1 — Gate 1 is on `main` of `loutascare-backend` (commit `6b13ac2`) and verified on the development database; the schema was applied by Prisma migration `20261010_specialty_registry_gate1`, not `prisma db push`; the registry was initialised by a specialty-only run. Migration-versus-`db push` policy for later gates left open.
+- Registry/API_REGISTRY.md v1.2 — Gate 1 endpoints now recorded as on `main`.
+
 ## Repository — 2026-10-09
 
 ### Added
