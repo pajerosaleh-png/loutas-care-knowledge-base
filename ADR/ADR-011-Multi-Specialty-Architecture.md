@@ -25,9 +25,10 @@
 | Part | Gate | State |
 |---|---|---|
 | Specialty Registry, Clinic Specialty, Primary Specialty, three registry APIs, audit scope columns | Gate 1 | **Implemented** on `main` of `loutascare-backend` (commit `6b13ac2`); applied to the development database and verified on 2026-10-11 |
-| Clinic Setup specialty screen; booking uses the registry | Gate 2 | Planned — not implemented |
-| Configurable-by-specialty EMR / module resolver | Gate 3 | Planned — not implemented |
-| Dental module (overview, odontogram, examination, treatment plan, imaging) | Gates 4–8 | Planned — not implemented |
+| Clinic Setup specialty screen; booking uses the registry | Gate 2 | **Implemented** on `main` (backend `f055da0`, frontend `31a0e16`, 2026-11-05), on the ported live-site routes: booking, edit and walk-in validate against the clinic's enabled specialties (stored as the key; blank → primary); `GET /clinic/specialties` answers from the registry |
+| Configurable-by-specialty EMR / module resolver | Gate 3 | **Implemented** on `main` (backend `e15a7a4`, frontend `b030ac0`, 2026-11-06): `lib/emr` manifests + `resolveEmrTabs` (Core tabs always; a module's tabs only when the clinic enabled its specialty and the open visit is of it; read-only unless the visit is open); one seam in `PatientEMR.tsx`; visit specialty shown in Visit history |
+| Dental shell: manifest, Dental Overview, summary card, `GET /patients/:id/dental/summary` (409 `MODULE_NOT_ENABLED` when Dental is off), odontogram mounted read-only and empty | Gate 4 | **Implemented** on `main` (same commits as Gate 3). No dental data is stored |
+| Dental persisted odontogram, examination, treatment plan, imaging | Gates 5–8 | Planned — not implemented |
 | Security and audit hardening | Gate 9 | Planned — not implemented |
 | Periodontal and advanced dental | Later | Deferred pending clinical validation |
 
