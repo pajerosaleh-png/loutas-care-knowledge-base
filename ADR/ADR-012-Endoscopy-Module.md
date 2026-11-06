@@ -3,11 +3,11 @@
 **Document ID:** ADR-012  
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
-**Status:** Proposed — approvals so far are **in principle only**  
-**Version:** 0.2  
+**Status:** Accepted as the Endoscopy baseline (2026-11-06) — no gate approved yet  
+**Version:** 1.0  
 **Created:** 2026-11-06  
 **Last Updated:** 2026-11-06  
-**Next Review:** before Gate E1  
+**Next Review:** before Gate E1 and at CR-1  
 **Approval Authority:** Product Owner (product decisions) · Clinical Reviewer (clinical terminology, fields and workflow)
 
 ---
@@ -18,13 +18,13 @@
 
 # Status
 
-**Proposed.** Nothing in this ADR is implemented. Endoscopy is today a registry entry only (`endoscopy`, `المناظير`, Core EMR only — ADR-011).
+**Accepted as the Endoscopy baseline** by the Product Owner on 2026-11-06 (Knowledge Base PR #5 merged). Nothing in this ADR is implemented. Endoscopy is today a registry entry only (`endoscopy`, `المناظير`, Core EMR only — ADR-011).
 
-**Every approval recorded here is an approval in principle.** It is not an approval to merge this ADR, to merge any related pull request (backend #24, frontend #23, Knowledge Base #5), or to start implementation. Each of those needs its own explicit approval.
+Accepting this ADR **does not** approve any gate, nor the merge of backend #24 or frontend #23. Each gate, and each merge, needs its own explicit approval. The approvals in sections 1 and 2 remain **in principle**; the clinical content of 2.1 and 2.3 is confirmed at CR-1.
 
 | Part | Gate | State |
 |---|---|---|
-| Decisions and architecture (this ADR) | E0 | **In review** |
+| Decisions and architecture (this ADR) | E0 | **Accepted** 2026-11-06 |
 | Endoscopy shell: manifest, overview, summary card | E1 | Planned — not approved |
 | **Early Clinical Review** (stop point) | CR-1 | Planned — before E2 and E3 |
 | Endoscopy case and pre-procedure assessment | E2 | Planned — not approved |
@@ -36,7 +36,8 @@
 | Security and audit matrix; image links | E8 | Planned — not approved |
 | **Final Clinical Review** | CR-2 | Planned — after E8 |
 
-**Still open before a final approval:** the details of E-P1, E-P2, E-P3, E-P5 and E-P8 (section 2), and the database migration policy with the schema baseline (section 4).
+**Approved on 2026-11-06:** E-P8 language of the saved report (2.7) · the reviewed-migration policy, with the schema baseline approved for preparation (section 4).  
+**Still open:** the details of E-P1, E-P2, E-P3 and E-P5 (confirmed at CR-1 / the gate that builds them); applying the baseline on a database (separate approval).
 
 ---
 
@@ -81,7 +82,7 @@ Not available: a signed **report** document with versions (Forms cover forms, no
 | E-P5 | Permissions | Reuse existing keys; no `endoscopy:*` keys unless a gate shows a need | Conditional on an explicit **permission matrix** with **branch scope** and **audit** — section 2.4 |
 | E-P6 | Images | Link **existing** files and radiology items to the case and a site; no new upload; no bytes until storage in Egypt (ADR-011 D4) | **Access to the original file is checked** when linking and when showing the link — section 2.5 |
 | E-P7 | Clinical review | Two stages: **Early Clinical Review** and **Final Clinical Review** | Section 2.6 |
-| E-P8 | Language | Every label in English and Arabic (approved list *Endoscopy EMR Labels*, 2026-10-20) | Decide **the language of the saved report** — section 2.7 |
+| E-P8 | Language | Every label in English and Arabic (approved list *Endoscopy EMR Labels*, 2026-10-20) | Language of the saved report — **approved 2026-11-06**, section 2.7 |
 
 ### 2.1 Procedure types: common fields, type-specific fields, Other (E-P1)
 
@@ -142,9 +143,9 @@ The matrix is tested route by route in E8 (as the Dental security matrix).
 1. **Early Clinical Review (CR-1)** — before E2 and E3, i.e. before the parts that shape clinical decisions are built: the pre-procedure and time-out forms, the findings vocabulary and sites, the type-specific fields (2.1), and the procedure documentation flow. The reviewer's comments and the decisions taken on them are recorded in this ADR (or a linked review note). **E2 and E3 do not start before those comments are recorded and addressed.**
 2. **Final Clinical Review (CR-2)** — after E8: the whole chain — assessment, findings, report, specimens, pathology request, pathology result and the clinician's acknowledgement — is reviewed together, to confirm that what was built matches the approved clinical decisions. Corrections found here are made before the module is called production-ready.
 
-### 2.7 Language of the saved report (E-P8) — open
+### 2.7 Language of the saved report (E-P8) — approved 2026-11-06
 
-Proposed for the Product Owner's decision:
+Approved by the Product Owner:
 
 - Labels, headings and coded terms are shown in the **reader's** language (English or Arabic), from the stable codes.
 - Free text (indication details, descriptions, impression, recommendations) is saved **as written** and never machine-translated.
@@ -177,7 +178,7 @@ Proposed for the Product Owner's decision:
 
 All changes are additive and nullable.
 
-**Schema prerequisite — open:** the 2026-11-06 review found that `prisma/migrations` does not rebuild the schema on an empty database (it stops at `20261025_schema_batch_a`; `ClinicalHistoryItem` was created by `db push`). The reviewed-migration policy and its schema baseline (proposed in ADR-011) must be **approved and done before E2**, the first Endoscopy schema change.
+**Schema prerequisite:** the 2026-11-06 review found that `prisma/migrations` does not rebuild the schema on an empty database (it stops at `20261025_schema_batch_a`; `ClinicalHistoryItem` was created by `db push`). The reviewed-migration policy (ADR-011) was **approved on 2026-11-06** and the schema baseline is **approved for preparation**. Applying the baseline on any database needs a separate approval. The baseline must be done **before E2**, the first Endoscopy schema change.
 
 ## 5. Gates
 
@@ -227,6 +228,7 @@ Bronchoscopy (E-D4); device or video-processor integration; image upload and vie
 |---|---|---|
 | 0.1 | 2026-11-06 | First draft: four product decisions, proposed defaults, architecture, gates E1–E8 |
 | 0.2 | 2026-11-06 | All approvals marked *in principle*; conditions added to E-P1–E-P8 (sections 2.1–2.7); clinical review in two stages (CR-1 before E2/E3, CR-2 after E8); report, pathology request and pathology result stated as three separate linked records; permission matrix; roles; open items listed |
+| 1.0 | 2026-11-06 | Accepted as the Endoscopy baseline (KB PR #5); E-P8 (report language) approved; reviewed-migration policy approved and schema baseline approved for preparation. No gate approved |
 
 ---
 
@@ -236,4 +238,4 @@ Bronchoscopy (E-D4); device or video-processor integration; image upload and vie
 - `04-Clinical/CLN-006-Clinical-Documents-Architecture.md`
 - *LOUTAS Care — Endoscopy Module Plan (Proposed)*, 2026-10-18
 - *LOUTAS Care — Endoscopy EMR Labels*, 2026-10-20
-- Backend PR #24, frontend PR #23 (visit lock for procedures, operations and files) — not merged
+- Backend PR #24, frontend PR #23 (visit lock for procedures, operations and files) — not merged at acceptance
