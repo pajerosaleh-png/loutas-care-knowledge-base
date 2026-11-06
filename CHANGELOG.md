@@ -3,6 +3,11 @@
 All notable changes to the LOUTAS Care Knowledge Base are documented here.
 The LOUTAS AI Engineering Framework (LAEF) follows the two-level versioning model defined in LAEF-006.
 
+## 2026-11-06
+
+- ADR-011 — Gates 5–9 implemented on `main` (odontogram, examination, treatment plan with explicit “Add to invoice”, imaging links on Core radiology and files, security and audit hardening). Image bytes still wait for storage in Egypt (D4). Clinical review by a dentist is the next step (decision 8).
+- Security — audit rows written without `clinicId` (most Core actions) now reach the clinic's audit trail: stamped at write from the actor's clinic, older rows read by actor; nothing rewritten.
+
 ## Repository — 2026-10-11
 
 ### Changed
