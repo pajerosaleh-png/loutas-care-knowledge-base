@@ -4,9 +4,9 @@
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
 **Status:** Approved  
-**Version:** 1.2  
+**Version:** 1.3  
 **Created:** 2026-10-09  
-**Last Updated:** 2026-10-11  
+**Last Updated:** 2026-11-06  
 **Next Review:** 2027-10-09  
 **Approval Authority:** Product Owner (decisions of 2026-10-08 and 2026-10-09)
 
@@ -180,11 +180,11 @@ Gate 1 does **not**:
 
 ---
 
-# Proposed schema-change policy (pending approval — not in force)
+# Schema-change policy (approved 2026-11-06)
 
-**Status: Proposed.** This section records a proposal for the Product Owner to approve before Gate 5, the next gate that changes the schema. Until it is approved, no policy change is in effect, and nothing described here has been done.
+**Status: Approved** by the Product Owner on 2026-11-06 (with ADR-012). The policy is in force from that date. Gates 5–8 already followed point 1 (migrations `20261106_dental_gate5` … `gate8`).
 
-**Proposal**
+**Policy**
 
 1. Future schema changes are made through reviewed Prisma migration files, as Gate 1 was.
 2. A separate baseline task is prepared for the existing database schema, so that the migration history can describe the whole schema.
@@ -195,9 +195,9 @@ Gate 1 does **not**:
 
 - No baseline migration has been created.
 - No baseline has been applied or marked as applied on any database.
-- The migrations folder still cannot rebuild the database on its own.
+- The migrations folder still cannot rebuild the database on its own: on an empty database it stops at `20261025_schema_batch_a` (`ClinicalHistoryItem` and other tables were created by `db push`).
 
-The baseline task is not part of Gate 1 or its cleanup. It needs its own approval, scope and verification before Gate 5.
+The baseline task is approved for **preparation** (2026-11-06). Applying it, or marking any migration as applied, on the development or any shared database needs a separate, explicit approval. It must be done before ADR-012 Gate E2.
 
 ---
 
