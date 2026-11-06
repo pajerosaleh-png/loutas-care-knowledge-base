@@ -73,7 +73,7 @@ Architecture Decision Records shall be created for decisions involving:
 | ADR-009-Deployment-Architecture.md | Deployment architecture |
 | ADR-010-Integration-Architecture.md | Integration architecture |
 | ADR-011-Multi-Specialty-Architecture.md | Multi-specialty architecture: specialty registry, clinic specialties, configurable EMR |
-| ADR-012-Endoscopy-Module.md | Endoscopy specialty module (proposed): decisions, architecture, gates E1–E8 |
+| ADR-012-Endoscopy-Module.md | Endoscopy specialty module (proposed, approvals in principle only): decisions, architecture, clinical review CR-1 / CR-2, gates E1–E8 |
 
 Additional ADRs may be added as new architectural decisions arise.
 
