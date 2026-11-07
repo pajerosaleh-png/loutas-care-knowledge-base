@@ -4,7 +4,7 @@
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
 **Status:** Accepted as the Endoscopy baseline (2026-11-06) — no gate approved yet  
-**Version:** 1.2  
+**Version:** 1.3  
 **Created:** 2026-11-06  
 **Last Updated:** 2026-11-07  
 **Next Review:** before Gate E1 and at CR-1  
@@ -26,8 +26,8 @@ Accepting this ADR **does not** approve any gate, nor the merge of backend #24 o
 |---|---|---|
 | Decisions and architecture (this ADR) | E0 | **Accepted** 2026-11-06 |
 | Endoscopy shell: manifest, overview, summary card | E1 | **Implemented** 2026-11-07 — backend #25, frontend #24 merged; CI green |
-| **Early Clinical Review** (stop point) | CR-1 | **In review** — reviewer: Dr. Mohammed Saleh (named 2026-11-07); review sheet *Endoscopy CR-1 — Early Clinical Review Sheet* sent |
-| Endoscopy case and pre-procedure assessment | E2 | Planned — not approved |
+| **Early Clinical Review** (stop point) | CR-1 | **Preliminarily Approved — Pending Clinical Validation** (Product Owner, 2026-11-07, technical planning only). Designated reviewer: Dr. Mohammed Saleh — **not yet reviewed**. See 2.8 and `ADR-012-CR1-Decision-Matrix.md` |
+| Endoscopy case and pre-procedure assessment | E2 | Planned — not approved. Technical plan: `ADR-012-E2-Implementation-Plan.md`; clinical activation blocked until CR-1 validation |
 | Procedure record: time-out, times, team, findings, complications | E3 | Planned — not approved |
 | Specimens → pathology request (lab order), pending results, acknowledgement | E4 | Planned — not approved |
 | Endoscopy report: draft, sign, signed amendment, print | E5 | Planned — not approved |
@@ -141,7 +141,7 @@ The matrix is tested route by route in E8 (as the Dental security matrix).
 
 ### 2.6 Clinical review in two stages (E-P7)
 
-1. **Early Clinical Review (CR-1)** — before E2 and E3, i.e. before the parts that shape clinical decisions are built: the pre-procedure and time-out forms, the findings vocabulary and sites, the type-specific fields (2.1), and the procedure documentation flow. The reviewer's comments and the decisions taken on them are recorded in this ADR (or a linked review note). **E2 and E3 do not start before those comments are recorded and addressed.**
+1. **Early Clinical Review (CR-1)** — before E2 and E3, i.e. before the parts that shape clinical decisions are built: the pre-procedure and time-out forms, the findings vocabulary and sites, the type-specific fields (2.1), and the procedure documentation flow. The reviewer's comments and the decisions taken on them are recorded in this ADR (or a linked review note). **E2 and E3 do not start before those comments are recorded and addressed.** E2 technical scaffolding with no clinical rule activated may proceed on the Product Owner's approval of the E2 scope (2.8; `ADR-012-E2-Implementation-Plan.md`).
 2. **Final Clinical Review (CR-2)** — after E8: the whole chain — assessment, findings, report, specimens, pathology request, pathology result and the clinician's acknowledgement — is reviewed together, to confirm that what was built matches the approved clinical decisions. Corrections found here are made before the module is called production-ready.
 
 ### 2.7 Language of the saved report (E-P8) — approved 2026-11-06
@@ -151,6 +151,14 @@ Approved by the Product Owner:
 - Labels, headings and coded terms are shown in the **reader's** language (English or Arabic), from the stable codes.
 - Free text (indication details, descriptions, impression, recommendations) is saved **as written** and never machine-translated.
 - The signed version stores the language it was signed in; the print view prints the labels in the chosen language and the free text as written.
+
+### 2.8 CR-1 — preliminary Product Owner approval (2026-11-07)
+
+**Status: Preliminarily Approved — Pending Clinical Validation.** The Product Owner approved the CR-1 recommendations as the design baseline **for technical planning and preparation only**. This is **not** a clinical approval and is not attributed to the clinical reviewer. Dr. Mohammed Saleh, the designated gastroenterologist, has not yet reviewed them.
+
+Preliminary scope: the seven procedure types; the common and type-specific fields; the workflow (check-in, Start Visit, pre-procedure assessment, clearance, time-out, sedation, procedure and scope times, recovery, discharge, report signing) as separate timestamped events, none inferred from another; the consent, pre-procedure, time-out and discharge form structures; the findings, interventions, complications and incomplete-procedure catalogs (not claimed to be clinically complete); five distinct linked records — Endoscopy Case, Endoscopy Report, Pathology Order, Pathology Result, Doctor Acknowledgement; signed amendments; bilingual labels, permissions, branch / clinic scope and audit.
+
+Restrictions: no unvalidated form is published, and no unvalidated clinical field, threshold or rule is activated. INR, platelets and other labs may be shown when available, with no automatic eligibility rule. ASA classification is configurable per clinic policy. Each item and its validation status is tracked in `ADR-012-CR1-Decision-Matrix.md`; rows are updated only after the gastroenterologist's own review.
 
 ## 3. Architecture
 
@@ -230,13 +238,16 @@ Bronchoscopy (E-D4); device or video-processor integration; image upload and vie
 | 0.1 | 2026-11-06 | First draft: four product decisions, proposed defaults, architecture, gates E1–E8 |
 | 0.2 | 2026-11-06 | All approvals marked *in principle*; conditions added to E-P1–E-P8 (sections 2.1–2.7); clinical review in two stages (CR-1 before E2/E3, CR-2 after E8); report, pathology request and pathology result stated as three separate linked records; permission matrix; roles; open items listed |
 | 1.1 | 2026-11-07 | Gate E1 implemented (read-only shell; procedure types code-defined) |
-| 1.2 | 2026-11-07 | Clinical reviewer named (Dr. Mohammed Saleh); CR-1 review sheet issued; schema baseline merged and recorded on Railway |
+| 1.2 | 2026-11-07 | Clinical reviewer named (Dr. Mohammed Saleh); CR-1 review sheet prepared; schema baseline merged and recorded on Railway |
+| 1.3 | 2026-11-07 | CR-1 preliminarily approved by the Product Owner for technical planning — pending clinical validation (2.8); CR-1 decision matrix and E2 technical plan added |
 | 1.0 | 2026-11-06 | Accepted as the Endoscopy baseline (KB PR #5); E-P8 (report language) approved; reviewed-migration policy approved and schema baseline approved for preparation. No gate approved |
 
 ---
 
 # Related documents
 
+- `ADR/ADR-012-CR1-Decision-Matrix.md`
+- `ADR/ADR-012-E2-Implementation-Plan.md`
 - `ADR/ADR-011-Multi-Specialty-Architecture.md`
 - `04-Clinical/CLN-006-Clinical-Documents-Architecture.md`
 - *LOUTAS Care — Endoscopy Module Plan (Proposed)*, 2026-10-18
