@@ -29,7 +29,7 @@ Accepting this ADR **does not** approve any gate, nor the merge of backend #24 o
 | **Early Clinical Review** (stop point) | CR-1 | **Preliminarily Approved — Pending Clinical Validation** (Product Owner, 2026-11-07, technical planning only). Designated reviewer: Dr. Mohammed Saleh — **not yet reviewed**. See 2.8 and `ADR-012-CR1-Decision-Matrix.md` |
 | Endoscopy case and pre-procedure assessment | E2 | **Technical Groundwork — Approved with Conditions** (2026-11-07) · **Clinical Activation — Blocked Pending Clinical Validation** · **Database Migration — applied on Railway 2026-11-07** (backup first; status up to date; no schema difference). Groundwork **merged** 2026-11-07: backend #28, frontend #25 (acceptance test 22/22 on a local copy). Plan: `ADR-012-E2-Implementation-Plan.md`; decisions: `ADR-012-Technical-Decision-Register.md` |
 | Procedure record: time-out, times, team, findings, complications | E3 | **Technical Groundwork — Approved with Conditions** (Product Owner, 2026-11-07, same terms as E2) · **Clinical Activation — Blocked Pending Clinical Validation** · **Database Migration — applied on Railway 2026-11-07** (backend #29, backup first, no schema difference) · groundwork **merged** 2026-11-07: backend #30, frontend #28 (local acceptance 14/14; checked on the Product Owner's system). Time-out-before-start rule built but OFF (`settings.endoscopy.requireTimeoutBeforeStart`) |
-| Specimens → pathology request (lab order), pending results, acknowledgement | E4 | Planned — not approved |
+| Specimens → pathology request (lab order), pending results, acknowledgement | E4 | **Technical Groundwork — in progress** (Product Owner, 2026-11-07, same terms as E2/E3) · **Database Migration — Pending Separate Review and Approval** (backend #31: `EndoscopySpecimen`, Core `ResultAcknowledgement`) |
 | Endoscopy report: draft, sign, signed amendment, print | E5 | Planned — not approved |
 | Recovery and discharge | E6 | Planned — not approved |
 | Billing (explicit Add to invoice) and follow-up | E7 | Planned — not approved |
@@ -184,7 +184,7 @@ Restrictions: no unvalidated form is published, and no unvalidated clinical fiel
 | `EndoscopyFinding` | Site, finding code **and vocabulary version**, size, description, intervention; never edited — voided with a reason | E3 |
 | `EndoscopySpecimen` | Label, site, link to the Core lab `ServiceOrder` (the pathology request) | E4 |
 | `EndoscopyReport` | Versions: draft, signed, signed amendment with reason; signed language | E5 |
-| `ServiceOrder.reviewedById / reviewedAt` | Core: a clinician acknowledges a result (nullable columns) | E4 |
+| ~~`ServiceOrder.reviewedById / reviewedAt`~~ → **`ResultAcknowledgement`** (Core) | A clinician acknowledges one result **version** as its own record (TD-11, Product Owner 2026-11-07: separate record, matching CR-1 F1; additive; history kept; works for every lab result) | E4 |
 | `Vitals.respiratoryRate / consciousness / painScore` | Core: recovery observations (nullable columns) | E6 |
 
 All changes are additive and nullable.
