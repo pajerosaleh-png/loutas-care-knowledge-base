@@ -2,8 +2,12 @@
 
 **Document ID:** ADR-012-E2  
 **Linked to:** `ADR/ADR-012-Endoscopy-Module.md`, `ADR/ADR-012-CR1-Decision-Matrix.md`  
-**Status:** Plan only — Gate E2 **not approved**; clinical content **Preliminarily Approved — Pending Clinical Validation**  
-**Date:** 2026-11-07
+**Status:**
+- **E2 Technical Groundwork — Approved with Conditions** (Product Owner, 2026-11-07)
+- **Clinical Activation — Blocked Pending Clinical Validation**
+- **Database Migration — Pending Separate Review and Approval** (backend PR #27)
+
+**Date:** 2026-11-07 · **Decisions:** `ADR-012-Technical-Decision-Register.md`
 
 ---
 
@@ -15,10 +19,11 @@
 | Gate E1 (shell, procedure types) | **Done** — merged |
 | CR-1 clinical validation | **Blocked** — Dr. Mohammed Saleh has not reviewed the sheet yet |
 | E2 technical plan | **Ready** — this document |
-| E2 technical scaffolding (section 3) | **Ready to start** once the Product Owner approves the E2 scaffolding scope |
-| E2 clinical activation (section 4) | **Blocked** until CR-1 rows C1–C6, D1–D2, A2, A19 are validated |
+| E2 technical groundwork (section 3) | **Approved with conditions** 2026-11-07 — implementation PR to follow the migration review |
+| E2 clinical activation (section 4) | **Blocked pending clinical validation** (CR-1 rows C1–C6, D1–D2, A2, A19) |
+| E2 database migration | **Pending separate review and approval** — backend PR #27 (not merged, not deployed, not run on Railway) |
 
-**Blockers:** (1) gastroenterologist validation of CR-1; (2) Product Owner approval of the E2 gate scope and of the E2 schema migration (section 5); (3) the open technical decisions in section 9.
+**Blockers:** (1) gastroenterologist validation of CR-1 (clinical activation only); (2) Product Owner review and approval of the E2 migration, PR #27 (before the implementation PR can be merged).
 
 ## 2. Clinical vs technical separation
 
@@ -40,11 +45,15 @@
 
 | Model | Purpose | Key fields |
 |---|---|---|
-| `EndoscopyCase` | One per endoscopy visit (shared patient record, existing `Visit`) | `id`, `clinicId`, `branchId`, `patientId`, `visitId` (unique), `procedureTypeCode`, `procedureTypesVersion`, `otherProcedureName`, `otherDescription`, `state` (`PREP` · `CLEARED` · `NOT_CLEARED` · later gates add more), `endoscopistId`, `createdById`, `revision`, timestamps, `shared` |
+| `EndoscopyCase` | One per endoscopy visit (shared patient record, existing `Visit`); **opened only by the explicit Start Visit** (TD-01) | `id`, `clinicId`, `branchId`, `patientId`, `visitId` (unique), `procedureTypeCode`, `procedureTypesVersion`, `otherProcedureName`, `otherDescription`, `state` (`PREP` · `CLEARED` · `NOT_CLEARED` · later gates add more), `endoscopistId`, `createdById`, `revision`, timestamps, `shared` |
 | `EndoscopyEvent` | Append-only timeline; one row per event, own server time and actor; never derived from another event | `id`, `caseId`, `clinicId`, `branchId`, `patientId`, `visitId`, `code`, `at` (server), `actorId`, `actorName`, `note` |
-| `EndoscopyAssessment` | Anticoagulant / antiplatelet review and clearance decision, versioned (a change is a new revision; history kept) | `caseId`, `anticoagulants` (JSON: drug, last dose, plan, note), `decision`, `notClearedReason`, `decidedById`, `decidedAt`, `revision` |
+| `EndoscopyAssessment` | Anticoagulant / antiplatelet review, versioned (each save a new row; history kept) | `caseId`, `revision` (unique per case), `anticoagulants` (JSON: drug, last dose, plan, note), `note`, `recordedById`, `recordedAt` |
 
-Event codes are a frozen, versioned code list (as the procedure types). E2 writes only `start_visit`, `assessment_saved`, `cleared`, `not_cleared`; check-in is read from the existing Appointment. The other nine events are added by E3–E6.
+The clearance decision is the case `state` plus a `cleared` / `not_cleared` event (reason in the event `note`), so every decision and change of decision stays in the timeline. Exact SQL: backend PR #27, migration `20261107120000_endoscopy_e2_case`.
+
+Event codes are a frozen, versioned code list (as the procedure types). E2 writes only `start_visit`, `assessment_saved`, `cleared`, `not_cleared`; check-in is read from the existing Appointment. Later gates add, each as its own event with its own time: `timeout_signed`, `sedation_started`, `procedure_started`, `scope_inserted`, `scope_withdrawn`, `procedure_ended` (E3), `recovery_started`, `discharged` (E6), `report_signed` (E5). Sedation start and procedure start, and scope insertion and withdrawal, are always separate events (TD-02).
+
+**Planned for later gates (no E2 table):** assisting staff — several members, each with a role (E3, `EndoscopyCaseStaff`); specimens — each with a unique Specimen ID linked to its pathology lab order (E4, `EndoscopySpecimen`).
 
 **Not created:** a separate patient record or EMR; new permission keys; any table for forms (Core `FormTemplate` / `FormResponse` are reused).
 
@@ -53,11 +62,11 @@ Event codes are a frozen, versioned code list (as the procedure types). E2 write
 | Method and path | Does | Permission | Visit |
 |---|---|---|---|
 | `GET /visits/:visitId/endoscopy/case` | Case, events, assessment, required-forms status | `emr:read` + record walls | any |
-| `POST /visits/:visitId/endoscopy/case` | Idempotent open of the case (advisory lock, unique `visitId`); records `start_visit` with the visit's own start time | `visit:start` or `emr:write` | open |
+| *(no route)* | The case is opened by a Core hook inside the Start Visit transaction (`onVisitStarted`, registered by the module): when the visit's specialty is `endoscopy` and the clinic has Endoscopy enabled, it creates the case and its `start_visit` event in the same transaction as `VISIT_STARTED`. Idempotent (unique `visitId`): a reopen adds no second case. A visit started before E2 shows "No endoscopy case — this visit was not started as an endoscopy visit with the module on"; opening a tab never creates one (TD-01) | the Start Visit permission (`visit:start` + Core rules) | — |
 | `PUT /visits/:visitId/endoscopy/case/type` | Procedure type; Other requires a name | `emr:write` ⚕ | open |
 | `PUT /visits/:visitId/endoscopy/assessment` | Anticoagulant review (structure only), revision-checked (`409 STALE`) | `emr:write` ⚕ | open |
-| `POST /visits/:visitId/endoscopy/clearance` | Cleared / not cleared; reason required for not cleared; refused while required published forms are unsigned | `emr:write` ⚕ (decision T-3) | open |
-| `GET /patients/:id/endoscopy/pre-assessment` | Read-only allergies (`PatientFlag`), active medications (prescriptions), latest lab results present on the record | `emr:read` + walls | any |
+| `POST /visits/:visitId/endoscopy/clearance` | Cleared / not cleared; reason required for not cleared; refused while required published forms are unsigned | **`procedures:manage`** ⚕ (TD-03) | open |
+| `GET /patients/:id/endoscopy/pre-assessment` | Read-only: active allergies (`PatientFlag`, `status = active`); **current medications** — `PrescriptionItem` with `status = active` only, each with its status, prescribing visit, date and prescriber (TD-05); INR and platelet results when present on the record (`ServiceResult`), with their date — no threshold | `emr:read` + walls | any |
 | `GET /endoscopy/event-codes`, `GET /endoscopy/terminology` | Frozen code lists, marked `provisional: true` | authenticated | — |
 
 Every write: `409 MODULE_NOT_ENABLED` if the clinic has not enabled Endoscopy; `403 BRANCH_FORBIDDEN` outside the member's branch; existing visit-lock rules (`visitWritable`) — a closed visit is never modified; `404` for records behind a branch wall.
@@ -95,11 +104,11 @@ Until the related CR-1 rows are validated: no form is published; no clearance cr
 | Action | Permission | Scope | Audit action |
 |---|---|---|---|
 | Read case / pre-assessment | `emr:read` (or `visit:start`) | clinic + record branch walls | — |
-| Open case | `visit:start` / `emr:write` | member's branch; open visit | `ENDOSCOPY_CASE_OPENED` |
+| Open case (inside Start Visit) | the Start Visit permission | member's branch | `ENDOSCOPY_CASE_OPENED` (same transaction as `VISIT_STARTED`) |
 | Set procedure type | `emr:write` ⚕ | branch; open visit | `ENDOSCOPY_TYPE_SET` |
 | Save anticoagulant review | `emr:write` ⚕ | branch; open visit | `ENDOSCOPY_ASSESSMENT_SAVED` (fields changed, revision) |
-| Clear / not clear | `emr:write` ⚕ | branch; open visit | `ENDOSCOPY_CLEARED` / `ENDOSCOPY_NOT_CLEARED` (reason) |
-| Add starter draft forms | existing Forms manage permission | clinic | existing `FORM_*` audit |
+| Clear / not clear | `procedures:manage` ⚕ (held by the doctor role by default; nurses do not hold it) | branch; open visit | `ENDOSCOPY_CLEARED` / `ENDOSCOPY_NOT_CLEARED` (reason) |
+| Add starter draft forms | `forms:build` | clinic | existing `FORM_*` audit; drafts only — publication by the clinic's designated clinical lead (TD-04) |
 
 Each audit row carries `clinicId`, `patientId`, `visitId` and is written in the same transaction as the change. ⚕ = clinical permission (`CLINICAL_PERMS`). No new permission keys (E-P5).
 
@@ -118,24 +127,18 @@ Each audit row carries `clinicId`, `patientId`, `visitId` and is written in the 
 |---|---|
 | Unit | Event-code and terminology lists frozen, versioned, EN + AR; procedure-type validation; clearance input validation |
 | Route (mocked) | Permission matrix per route; `409 MODULE_NOT_ENABLED`; `403 BRANCH_FORBIDDEN`; closed visit refused |
-| PostgreSQL (CI) | Case open is idempotent under concurrency; audit row in the same transaction; branch wall hides another branch's case; not cleared without reason refused; cleared refused while a published required form is unsigned; drafts never published by the system; stale revision refused |
+| PostgreSQL (CI) | Start Visit of an endoscopy visit opens exactly one case and one `start_visit` event in the same transaction; a reopen adds none; a non-endoscopy visit or a clinic without Endoscopy gets none; opening the tab creates nothing; a nurse (no `procedures:manage`) cannot clear; a discontinued or cancelled prescription never appears as a current medication; audit row in the same transaction; branch wall hides another branch's case; not cleared without reason refused; cleared refused while a published required form is unsigned; drafts never published by the system; stale revision refused |
 | Migration | CI guard: the E2 migration applies on empty and Railway-shaped databases |
 | Frontend | Tab shown only on endoscopy visits of a clinic with Endoscopy enabled; pre-assessment read-only; provisional banner; Arabic labels |
 | Manual acceptance | Script for the Product Owner, run before merge |
 
-## 9. Open technical decisions (Product Owner)
+## 9. Technical decisions
 
-| # | Decision | Proposal |
-|---|---|---|
-| T-1 | When the case is created | Lazily and idempotently when the Endoscopy tab is first opened on an open endoscopy visit (as the Dental examination); the `start_visit` event takes the visit's own start time — the visit's real event, not inferred |
-| T-2 | Event storage | Append-only `EndoscopyEvent` table rather than timestamp columns, so E3–E6 add events without schema changes |
-| T-3 | Who may clear | `emr:write` ⚕ (clinicians); a nurse cannot clear unless the clinic grants that permission |
-| T-4 | Starter drafts | Per-clinic action, never automatic |
-| T-5 | Medications source | Active prescriptions on the record; no separate medication list |
+Recorded in `ADR-012-Technical-Decision-Register.md` (TD-01 to TD-10).
 
 ## 10. Dependencies on Core
 
-Visit lifecycle and visit lock (`visitWritable`, `recordEntryVisitGuard`); module resolver and `moduleEnabled` (ADR-011); record walls (`recordWall` / `sees`); `PatientFlag` (allergies); `Prescription` (medications); `ServiceOrder` / `ServiceResult` (labs, later pathology); Core Forms (`FormTemplate`, `FormResponse`, `formAppliesTo` with `scopeType: 'specialty'`); `AuditLog`; `lib/i18n/ar.ts`.
+Start Visit seam (`getOrCreateOpenVisit` and the two Start Visit transactions in `src/routes/appointments.ts` — a module hook is added there, the Core still never names a specialty); visit lifecycle and visit lock (`visitWritable`, `recordEntryVisitGuard`); module resolver and `moduleEnabled` (ADR-011); record walls (`recordWall` / `sees`); `PatientFlag` (allergies); `Prescription` / `PrescriptionItem` (`status` active / discontinued); `ServiceOrder` / `ServiceResult` (labs, later pathology); Core Forms (`FormTemplate`, `FormResponse`, `formAppliesTo` with `scopeType: 'specialty'`); `AuditLog`; `lib/i18n/ar.ts`.
 
 ## 11. Unresolved clinical decisions (for Dr. Mohammed Saleh)
 

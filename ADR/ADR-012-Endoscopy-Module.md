@@ -4,7 +4,7 @@
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
 **Status:** Accepted as the Endoscopy baseline (2026-11-06) — no gate approved yet  
-**Version:** 1.3  
+**Version:** 1.4  
 **Created:** 2026-11-06  
 **Last Updated:** 2026-11-07  
 **Next Review:** before Gate E1 and at CR-1  
@@ -27,7 +27,7 @@ Accepting this ADR **does not** approve any gate, nor the merge of backend #24 o
 | Decisions and architecture (this ADR) | E0 | **Accepted** 2026-11-06 |
 | Endoscopy shell: manifest, overview, summary card | E1 | **Implemented** 2026-11-07 — backend #25, frontend #24 merged; CI green |
 | **Early Clinical Review** (stop point) | CR-1 | **Preliminarily Approved — Pending Clinical Validation** (Product Owner, 2026-11-07, technical planning only). Designated reviewer: Dr. Mohammed Saleh — **not yet reviewed**. See 2.8 and `ADR-012-CR1-Decision-Matrix.md` |
-| Endoscopy case and pre-procedure assessment | E2 | Planned — not approved. Technical plan: `ADR-012-E2-Implementation-Plan.md`; clinical activation blocked until CR-1 validation |
+| Endoscopy case and pre-procedure assessment | E2 | **Technical Groundwork — Approved with Conditions** (2026-11-07) · **Clinical Activation — Blocked Pending Clinical Validation** · **Database Migration — Pending Separate Review and Approval** (backend PR #27). Plan: `ADR-012-E2-Implementation-Plan.md`; decisions: `ADR-012-Technical-Decision-Register.md` |
 | Procedure record: time-out, times, team, findings, complications | E3 | Planned — not approved |
 | Specimens → pathology request (lab order), pending results, acknowledgement | E4 | Planned — not approved |
 | Endoscopy report: draft, sign, signed amendment, print | E5 | Planned — not approved |
@@ -158,6 +158,8 @@ Approved by the Product Owner:
 
 Preliminary scope: the seven procedure types; the common and type-specific fields; the workflow (check-in, Start Visit, pre-procedure assessment, clearance, time-out, sedation, procedure and scope times, recovery, discharge, report signing) as separate timestamped events, none inferred from another; the consent, pre-procedure, time-out and discharge form structures; the findings, interventions, complications and incomplete-procedure catalogs (not claimed to be clinically complete); five distinct linked records — Endoscopy Case, Endoscopy Report, Pathology Order, Pathology Result, Doctor Acknowledgement; signed amendments; bilingual labels, permissions, branch / clinic scope and audit.
 
+**E2 groundwork (2026-11-07):** the Product Owner approved the E2 technical groundwork with conditions and decided TD-01 to TD-05 (`ADR-012-Technical-Decision-Register.md`): the case is created only at the explicit Start Visit; each step is its own timestamped event; Cleared / Not cleared requires `procedures:manage`; starter forms are per-clinic drafts published only by the designated clinical lead; current medications are active prescription items only. Technical requirements also kept in the plan: separate sedation-start and procedure-start, scope insertion and withdrawal events; several assisting staff with roles; a unique Specimen ID; INR and platelets shown when present. These are technical planning requirements, not clinical approvals; the Boston scale, ASA, caecal intubation criteria and the other clinical choices remain pending.
+
 Restrictions: no unvalidated form is published, and no unvalidated clinical field, threshold or rule is activated. INR, platelets and other labs may be shown when available, with no automatic eligibility rule. ASA classification is configurable per clinic policy. Each item and its validation status is tracked in `ADR-012-CR1-Decision-Matrix.md`; rows are updated only after the gastroenterologist's own review.
 
 ## 3. Architecture
@@ -239,6 +241,7 @@ Bronchoscopy (E-D4); device or video-processor integration; image upload and vie
 | 0.2 | 2026-11-06 | All approvals marked *in principle*; conditions added to E-P1–E-P8 (sections 2.1–2.7); clinical review in two stages (CR-1 before E2/E3, CR-2 after E8); report, pathology request and pathology result stated as three separate linked records; permission matrix; roles; open items listed |
 | 1.1 | 2026-11-07 | Gate E1 implemented (read-only shell; procedure types code-defined) |
 | 1.2 | 2026-11-07 | Clinical reviewer named (Dr. Mohammed Saleh); CR-1 review sheet prepared; schema baseline merged and recorded on Railway |
+| 1.4 | 2026-11-07 | E2 technical groundwork approved with conditions; TD-01 to TD-05 decided (case created at Start Visit only); technical decision register; E2 migration submitted for review (backend PR #27) |
 | 1.3 | 2026-11-07 | CR-1 preliminarily approved by the Product Owner for technical planning — pending clinical validation (2.8); CR-1 decision matrix and E2 technical plan added |
 | 1.0 | 2026-11-06 | Accepted as the Endoscopy baseline (KB PR #5); E-P8 (report language) approved; reviewed-migration policy approved and schema baseline approved for preparation. No gate approved |
 
@@ -248,6 +251,7 @@ Bronchoscopy (E-D4); device or video-processor integration; image upload and vie
 
 - `ADR/ADR-012-CR1-Decision-Matrix.md`
 - `ADR/ADR-012-E2-Implementation-Plan.md`
+- `ADR/ADR-012-Technical-Decision-Register.md`
 - `ADR/ADR-011-Multi-Specialty-Architecture.md`
 - `04-Clinical/CLN-006-Clinical-Documents-Architecture.md`
 - *LOUTAS Care — Endoscopy Module Plan (Proposed)*, 2026-10-18
