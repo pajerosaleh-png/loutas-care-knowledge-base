@@ -4,9 +4,9 @@
 **Document Classification:** Architecture Decision Record  
 **Owner:** Chief Software Architect  
 **Status:** Accepted as the Endoscopy baseline (2026-11-06) — no gate approved yet  
-**Version:** 1.0  
+**Version:** 1.1  
 **Created:** 2026-11-06  
-**Last Updated:** 2026-11-06  
+**Last Updated:** 2026-11-07  
 **Next Review:** before Gate E1 and at CR-1  
 **Approval Authority:** Product Owner (product decisions) · Clinical Reviewer (clinical terminology, fields and workflow)
 
@@ -25,7 +25,7 @@ Accepting this ADR **does not** approve any gate, nor the merge of backend #24 o
 | Part | Gate | State |
 |---|---|---|
 | Decisions and architecture (this ADR) | E0 | **Accepted** 2026-11-06 |
-| Endoscopy shell: manifest, overview, summary card | E1 | Planned — not approved |
+| Endoscopy shell: manifest, overview, summary card | E1 | **Implemented** 2026-11-07 — backend #25, frontend #24 merged; CI green |
 | **Early Clinical Review** (stop point) | CR-1 | Planned — before E2 and E3 |
 | Endoscopy case and pre-procedure assessment | E2 | Planned — not approved |
 | Procedure record: time-out, times, team, findings, complications | E3 | Planned — not approved |
@@ -168,7 +168,7 @@ Approved by the Product Owner:
 
 | Entity | Purpose | Gate |
 |---|---|---|
-| `EndoscopyProcedureType` | Reference data (E-P1), stable codes, server-inserted | E1 |
+| `EndoscopyProcedureType` | Reference data (E-P1), stable codes. **E1: code-defined** (`src/modules/endoscopy/procedureTypes.ts`, frozen, versioned) — no table, so E1 needed no schema change before the baseline; whether a table is needed is decided at E2 | E1 |
 | `EndoscopyCase` | One per endoscopy visit: type, state, the event times of 2.2, endoscopist, team / room / endoscope text as recorded (E-P4), sedation, outcome, reasons, discharge time and destination | E2–E3, E6 |
 | `EndoscopyFinding` | Site, finding code **and vocabulary version**, size, description, intervention; never edited — voided with a reason | E3 |
 | `EndoscopySpecimen` | Label, site, link to the Core lab `ServiceOrder` (the pathology request) | E4 |
@@ -228,6 +228,7 @@ Bronchoscopy (E-D4); device or video-processor integration; image upload and vie
 |---|---|---|
 | 0.1 | 2026-11-06 | First draft: four product decisions, proposed defaults, architecture, gates E1–E8 |
 | 0.2 | 2026-11-06 | All approvals marked *in principle*; conditions added to E-P1–E-P8 (sections 2.1–2.7); clinical review in two stages (CR-1 before E2/E3, CR-2 after E8); report, pathology request and pathology result stated as three separate linked records; permission matrix; roles; open items listed |
+| 1.1 | 2026-11-07 | Gate E1 implemented (read-only shell; procedure types code-defined) |
 | 1.0 | 2026-11-06 | Accepted as the Endoscopy baseline (KB PR #5); E-P8 (report language) approved; reviewed-migration policy approved and schema baseline approved for preparation. No gate approved |
 
 ---
