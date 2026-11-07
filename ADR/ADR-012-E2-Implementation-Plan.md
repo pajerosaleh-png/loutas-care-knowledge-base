@@ -19,9 +19,9 @@
 | Gate E1 (shell, procedure types) | **Done** — merged |
 | CR-1 clinical validation | **Blocked** — Dr. Mohammed Saleh has not reviewed the sheet yet |
 | E2 technical plan | **Ready** — this document |
-| E2 technical groundwork (section 3) | **Approved with conditions** 2026-11-07 — implementation PR to follow the migration review |
+| E2 technical groundwork (section 3) | **Approved with conditions** 2026-11-07 — **implemented, pending approval:** backend #28, frontend #25 (CI green, not merged) |
 | E2 clinical activation (section 4) | **Blocked pending clinical validation** (CR-1 rows C1–C6, D1–D2, A2, A19) |
-| E2 database migration | **Pending separate review and approval** — backend PR #27 (not merged, not deployed, not run on Railway) |
+| E2 database migration | Backend #27 **merged** 2026-11-07; **not applied on Railway** — needs the Product Owner's separate approval (backup, `prisma migrate deploy`) before #28 can be used |
 
 **Blockers:** (1) gastroenterologist validation of CR-1 (clinical activation only); (2) Product Owner review and approval of the E2 migration, PR #27 (before the implementation PR can be merged).
 
@@ -87,6 +87,13 @@ All labels in `lib/i18n/ar.ts`; free text kept as written (E-P8).
 ### 3.4 Draft forms
 
 The four form structures (consent, pre-procedure checklist, time-out, discharge) are delivered as **draft** `FormTemplate`s with `scopeType: 'specialty'`, `scopeRef: 'endoscopy'`, through an explicit, per-clinic "add starter drafts" action — never seeded automatically, never published by the system. Only the clinic's clinical lead publishes them (existing Forms permissions).
+
+### 3.5 As built (backend #28, frontend #25)
+
+- Module hook `src/modules/visitHooks.ts` called from both Core Start Visit transactions (queue "In room" and `POST /appointments/:id/open-visit`); skipped when the desk moves a visit without reading it.
+- Routes as in 3.2; an extra timeline event `type_set` records each change of procedure type.
+- **Required clearance forms are clinic configuration:** `Clinic.settings.endoscopy.clearanceFormIds` — empty by default, so no form is required until the clinic configures it; only *published* forms in that list are checked. (Setting screen: later, with the clinical lead.)
+- Frontend tab **Endoscopy case** (default on an endoscopy visit) with the "Clinical content pending validation" banner; "Add starter forms (drafts)" on the same tab.
 
 ## 4. Clinical activation (blocked until validation)
 
